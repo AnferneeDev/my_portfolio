@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Github, Linkedin, Twitter } from "lucide-react";
+import { Github, Twitter } from "lucide-react";
 import { FlickeringGrid } from "./ui/flickering-grid";
 
 export default function Intro() {
@@ -19,31 +19,31 @@ export default function Intro() {
       {/* Main content centered */}
       <div className="relative z-10 flex flex-col items-center gap-6">
         <div className="flex items-center gap-4 w-full justify-center max-w-sm ml-8 md:ml-0 md:max-w-xl">
-          <div className="relative size-16 transform -rotate-3 rounded-md border-2 border-white/20 p-1 shadow-lg flex-shrink-0">
+          <div className="relative size-20 transform -rotate-3 rounded-md border-2 border-white/20 p-1 shadow-lg flex-shrink-0">
             <Image src="/annfernee.jpg" alt="Photo of Annfernee" layout="fill" objectFit="cover" className="rounded-sm" />
           </div>
           <div className="flex flex-col items-start text-left">
-            <h2 className="text-xl font-bold tracking-tight text-gray-950">Anfernee Pichardo</h2>
-            <p className="text-sm text-gray-600">Full stack developer • Venezuela (Remote)</p>
+            <h2 className="text-2xl font-bold tracking-tight text-gray-950">Anfernee Pichardo</h2>
+            <p className="text-base text-gray-700">Full stack developer</p>
           </div>
         </div>
         <div className="flex flex-col items-center gap-2 max-w-sm">
-          <h1 className="text-2xl font-bold tracking-tight text-gray-950">Want to test a new product?</h1>
-          <p className="mt-2 text-base text-gray-700">I turn ideas into production-grade web apps in Next.js. Modular, scalable, and optimized.</p>
+          <h1 className="text-3xl font-bold tracking-tight text-gray-950">Want to test a new product?</h1>
+          <p className="mt-2 text-lg text-gray-800">I turn ideas into production-grade web apps in Next.js. Modular, scalable, and optimized.</p>
         </div>
       </div>
 
       {/* Footer section (Socials & Email) with z-10 to be on top */}
       <div className="absolute bottom-4 z-10 flex flex-col items-center gap-4">
         <div className="flex items-center gap-4">
-          <a href="https://github.com/AnferneeDev" target="_blank" rel="noopener noreferrer" className="p-2 bg-gray-700 border border-gray-600 rounded-md text-white hover:bg-gray-600 hover:border-gray-500 transition-colors">
-            <Github className="size-5" />
+          <a href="https://github.com/AnferneeDev" target="_blank" rel="noopener noreferrer" className="p-2 bg-gray-800 border border-gray-700 rounded-md text-white hover:bg-gray-700 hover:border-gray-600 transition-colors">
+            <Github className="size-6" />
           </a>
-          <a href="https://x.com/AnferneeDev" target="_blank" rel="noopener noreferrer" className="p-2 bg-gray-700 border border-gray-600 rounded-md text-white hover:bg-gray-600 hover:border-gray-500 transition-colors">
-            <Twitter className="size-5" />
+          <a href="https://x.com/AnferneeDev" target="_blank" rel="noopener noreferrer" className="p-2 bg-gray-800 border border-gray-700 rounded-md text-white hover:bg-gray-700 hover:border-gray-600 transition-colors">
+            <Twitter className="size-6" />
           </a>
         </div>
-        <a href="mailto:anfernee.developer@gmail.com" className="text-sm font-bold text-pink-500 hover:underline">
+        <a href="mailto:anfernee.developer@gmail.com" className="text-base font-bold text-pink-500 hover:underline">
           anfernee.developer@gmail.com
         </a>
       </div>

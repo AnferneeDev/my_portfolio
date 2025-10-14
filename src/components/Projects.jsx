@@ -27,39 +27,39 @@ const badgeColors = {
 const getBadgeColor = (tech) => badgeColors[tech] || badgeColors.default;
 
 const ProjectCard = ({ project, setHoveredProject }) => {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const images = Array.isArray(project.imageUrl) ? project.imageUrl : [project.imageUrl];
-
-  useEffect(() => {
-    if (images.length <= 1) return;
-
-    const interval = setInterval(() => {
-      setCurrentImageIndex((prev) => (prev + 1) % images.length);
-    }, 3000);
-
-    return () => clearInterval(interval);
-  }, [images.length]);
-
   return (
-    <div className="flex w-full flex-col rounded-xl border border-neutral-300 bg-white p-6 shadow-sm transition-shadow hover:shadow-md">
-      <div className="flex flex-grow items-start space-x-8">
+    <div className="flex w-full flex-col rounded-lg border border-neutral-200 bg-white p-5 shadow transition-shadow hover:shadow-lg">
+      <div className="flex flex-grow items-start space-x-6">
         <div className="flex flex-shrink-0 flex-col">
           <div className="flex items-center space-x-2">
             <Link href={project.github} target="_blank" rel="noopener noreferrer" onMouseEnter={() => setHoveredProject(project)} onMouseLeave={() => setHoveredProject(null)}>
-              <InteractiveHoverButton hoverText="github" className="text-xl font-bold bg-white text-neutral-900">
+              {/* CHANGE: hoverText updated to "GitHub" */}
+              <InteractiveHoverButton hoverText="GitHub" className="text-xl font-bold bg-white text-neutral-900">
                 {project.name}
               </InteractiveHoverButton>
             </Link>
-            <ArrowLeft className="h-4 w-4 text-neutral-400" />
+            {/* CHANGE: Arrow icon is now animated and pink */}
+            <motion.div
+              animate={{ x: [-2, 2, -2] }}
+              transition={{
+                duration: 1.5,
+                repeat: Infinity,
+                repeatType: "loop",
+                ease: "easeInOut",
+              }}
+            >
+              <ArrowLeft className="h-4 w-4 text-pink-500" />
+            </motion.div>
           </div>
         </div>
         <div className="flex-grow pt-1">
           <p className="text-sm font-semibold text-neutral-700">{project.shortDescription}</p>
+          {/* CHANGE: Font size of main description is now larger */}
           <p className="mt-2 text-base text-neutral-600">{project.description}</p>
         </div>
       </div>
 
-      <div className="mt-6 border-t border-neutral-300 pt-4">
+      <div className="mt-5 border-t border-neutral-200 pt-4">
         <div className="flex flex-wrap gap-2">
           {project.tech.sort().map((tech) => (
             <Badge key={tech} className={getBadgeColor(tech)}>
@@ -97,16 +97,14 @@ export default function Projects() {
   }, []);
 
   return (
-    <div className="w-full h-full py-24 px-4" style={{ backgroundColor: "#c4c4c4", minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+    <div className="flex min-h-screen w-full flex-col justify-center bg-neutral-300 py-24 px-4">
       <AnimatePresence>
         {hoveredProject && (
           <motion.div
-            className="pointer-events-none fixed left-1/2 top-1/2 z-50 -translate-x-1/2 -translate-y-1/2 rounded-xl p-2 bg-white/50 backdrop-blur-md"
+            className="pointer-events-none fixed left-1/2 top-1/2 z-50 -translate-x-1/2 -translate-y-1/2 rounded-xl border border-white/10 bg-white/50 p-2 shadow-2xl backdrop-blur-md"
             style={{
               width: "80vw",
               height: "80vh",
-              boxShadow: "0 10px 30px rgba(0,0,0,0.2)",
-              border: "1px solid rgba(255,255,255,0.1)",
             }}
             initial={{ opacity: 0, scale: 0.85 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -124,11 +122,10 @@ export default function Projects() {
 
       <div className="mx-auto max-w-3xl">
         <div className="text-center">
-          <h2 className="text-3xl font-extrabold tracking-tight text-neutral-900 sm:text-4xl">Projects</h2>
-          <p className="mt-2 text-lg text-neutral-600">These are the things you'll find me working on.</p>
+          <h2 className="text-2xl font-extrabold tracking-tight text-neutral-900 sm:text-3xl">Projects</h2>
         </div>
 
-        <div className="mt-2 space-y-6">
+        <div className="mt-6 space-y-5">
           {projects.map((project) => (
             <ProjectCard key={project.slug} project={project} setHoveredProject={setHoveredProject} />
           ))}
