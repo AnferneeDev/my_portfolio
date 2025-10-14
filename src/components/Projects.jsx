@@ -37,7 +37,6 @@ const ProjectCard = ({ project, setHoveredProject }) => {
                 {project.name}
               </InteractiveHoverButton>
             </Link>
-            {/* CHANGE: Changed to flex-col to stack the arrow and text */}
             <motion.div
               className="flex flex-col items-center"
               animate={{ x: [-2, 2, -2] }}
@@ -97,7 +96,7 @@ export default function Projects() {
           ...prev,
           [idx]: ((prev[idx] || 0) + 1) % images.length,
         }));
-      }, 3000);
+      }, 2000);
     });
 
     return () => {
@@ -114,8 +113,8 @@ export default function Projects() {
           <motion.div
             className="pointer-events-none fixed left-1/2 top-1/2 z-50 -translate-x-1/2 -translate-y-1/2 rounded-xl border border-white/10 bg-white/50 p-2 shadow-2xl backdrop-blur-md"
             style={{
-              width: "80vw",
-              height: "80vh",
+              width: "60vw",
+              height: "60vh",
             }}
             initial={{ opacity: 0, scale: 0.85 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -131,7 +130,8 @@ export default function Projects() {
         )}
       </AnimatePresence>
 
-      <div className="mx-auto max-w-3xl">
+      {/* CHANGE: Increased width from max-w-3xl to max-w-4xl */}
+      <div className="mx-auto max-w-4xl">
         <div className="text-center">
           <h2 className="text-2xl font-extrabold tracking-tight text-neutral-900 sm:text-3xl">Projects</h2>
         </div>

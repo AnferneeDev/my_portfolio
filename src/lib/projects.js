@@ -33,7 +33,7 @@ export const projects = [
     shortDescription: "My best work on display.",
     description: "My personal portfolio, showcasing a collection of my best work from across the internet.",
     href: "/",
-    imageUrl: "/C1.png",
+    imageUrl: ["/PF1.png", "/PF2.png", "/PF3.png"],
     tech: ["Git", "JavaScript", "Next.js"],
     deploymentUrl: "https://anfernee.vercel.app/",
   },
