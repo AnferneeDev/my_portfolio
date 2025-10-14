@@ -1,7 +1,7 @@
 import "./globals.css";
 
 export const metadata = {
-  title: "Your Name - Portfolio",
+  title: "Anfernee - Portfolio",
   description: "My personal portfolio",
 };
 

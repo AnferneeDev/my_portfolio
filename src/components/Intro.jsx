@@ -17,7 +17,8 @@ export default function Intro() {
       </div>
 
       {/* Main content centered */}
-      <div className="relative z-10 flex flex-col items-center gap-6">
+      {/* CHANGE: Increased upward shift from -translate-y-2 to -translate-y-5 */}
+      <div className="relative z-10 flex flex-col items-center gap-6 -translate-y-5">
         <div className="flex items-center gap-4 w-full justify-center max-w-sm ml-8 md:ml-0 md:max-w-xl">
           <div className="relative size-20 transform -rotate-3 rounded-md border-2 border-white/20 p-1 shadow-lg flex-shrink-0">
             <Image src="/annfernee.jpg" alt="Photo of Annfernee" layout="fill" objectFit="cover" className="rounded-sm" />
