@@ -29,17 +29,17 @@ const getBadgeColor = (tech) => badgeColors[tech] || badgeColors.default;
 const ProjectCard = ({ project, setHoveredProject }) => {
   return (
     <div className="flex w-full flex-col rounded-lg border border-neutral-200 bg-white p-5 shadow transition-shadow hover:shadow-lg">
-      <div className="flex flex-grow items-start space-x-6">
-        <div className="flex flex-shrink-0 flex-col">
+      <div className="flex flex-grow items-start space-x-7">
+        <div className="w-44 flex-shrink-0 flex flex-col min-h-[60px]">
           <div className="flex items-center space-x-2">
             <Link href={project.github} target="_blank" rel="noopener noreferrer" onMouseEnter={() => setHoveredProject(project)} onMouseLeave={() => setHoveredProject(null)}>
-              {/* CHANGE: hoverText updated to "GitHub" */}
-              <InteractiveHoverButton hoverText="GitHub" className="text-xl font-bold bg-white text-neutral-900">
+              <InteractiveHoverButton hoverText="GitHub" className="text-xl font-bold bg-white text-neutral-900 whitespace-nowrap">
                 {project.name}
               </InteractiveHoverButton>
             </Link>
-            {/* CHANGE: Arrow icon is now animated and pink */}
+            {/* CHANGE: Changed to flex-col to stack the arrow and text */}
             <motion.div
+              className="flex flex-col items-center"
               animate={{ x: [-2, 2, -2] }}
               transition={{
                 duration: 1.5,
@@ -49,12 +49,23 @@ const ProjectCard = ({ project, setHoveredProject }) => {
               }}
             >
               <ArrowLeft className="h-4 w-4 text-pink-500" />
+              <p className="text-xs text-neutral-500">click</p>
             </motion.div>
           </div>
+          {project.name === "Clarity" ? (
+            <Link href={project.deploymentUrl} target="_blank" rel="noopener noreferrer" className="mt-2 ml-6 text-sm text-black no-underline border-b border-dashed border-black w-fit">
+              Download
+            </Link>
+          ) : (
+            project.deploymentUrl && (
+              <Link href={project.deploymentUrl} target="_blank" rel="noopener noreferrer" className="mt-2 ml-6 text-sm text-black no-underline border-b border-dashed border-black w-fit">
+                Go to Web
+              </Link>
+            )
+          )}
         </div>
         <div className="flex-grow pt-1">
           <p className="text-sm font-semibold text-neutral-700">{project.shortDescription}</p>
-          {/* CHANGE: Font size of main description is now larger */}
           <p className="mt-2 text-base text-neutral-600">{project.description}</p>
         </div>
       </div>

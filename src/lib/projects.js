@@ -11,6 +11,7 @@ export const projects = [
     href: "/",
     imageUrl: ["/CF1.png", "/CF2.png", "/CF3.png"],
     tech: ["JavaScript", "Next.js", "Git", "Vercel", "Upstash", "Vitest", "Sentry"],
+    deploymentUrl: "https://clear-feed.vercel.app/",
   },
   {
     Icon: Clock,
@@ -22,6 +23,7 @@ export const projects = [
     href: "/",
     imageUrl: ["/C1.png", "/C2.png", "/C3.png", "/C4.png", "/C5.png"],
     tech: ["Electron", "TypeScript", "React", "SQLite", "Node.js", "Git"],
+    deploymentUrl: "https://github.com/AnferneeDev/Pomodoro/releases",
   },
   {
     Icon: Star,
@@ -33,5 +35,6 @@ export const projects = [
     href: "/",
     imageUrl: "/C1.png",
     tech: ["Git", "JavaScript", "Next.js"],
+    deploymentUrl: "https://anfernee.vercel.app/",
   },
 ];
