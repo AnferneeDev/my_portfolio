@@ -31,7 +31,7 @@ export const projects = [
     shortDescription: "My best work on display.",
     description: "My personal portfolio, showcasing a collection of my best work from across the internet.",
     href: "/",
-    imageUrl: "/homepage.jpg",
+    imageUrl: "/C1.png",
     tech: ["Git", "JavaScript", "Next.js"],
   },
 ];
