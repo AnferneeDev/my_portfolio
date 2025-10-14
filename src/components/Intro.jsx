@@ -1,56 +1,52 @@
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
-import { ShineBorder } from "@/components/magicui/shine-border"; // <-- Add curly braces here
+import { Github, Linkedin, Twitter } from "lucide-react";
+import { FlickeringGrid } from "./ui/flickering-grid";
 
 export default function Intro() {
   return (
-    // Main container to center the content vertically and horizontally
-    <div className="flex flex-col items-center justify-center h-full w-full text-center gap-8">
-      {/* Container for the overlapping avatar images and names */}
-      <div className="relative h-48 w-64">
-        {/* Annfernee's Avatar + Name */}
-        <div className="absolute top-0 right-0 flex items-center gap-4">
-          <p className="font-semibold text-zinc-800">Annfernee</p>
-          <div className="relative size-24 rounded-full overflow-hidden border-2 border-white shadow-lg">
-            <Image
-              src="/annfernee.jpg" // Replace with your photo
-              alt="Photo of Annfernee"
-              layout="fill"
-              objectFit="cover"
-            />
+    <div className="h-screen w-full relative flex flex-col items-center justify-center text-center p-4 overflow-hidden">
+      {/* Full-screen FlickeringGrid background with radial mask */}
+      <div
+        className="absolute inset-0 z-0"
+        style={{
+          maskImage: "radial-gradient(circle at center, transparent 35%, black 60%)",
+          WebkitMaskImage: "radial-gradient(circle at center, transparent 35%, black 60%)",
+        }}
+      >
+        <FlickeringGrid />
+      </div>
+
+      {/* Main content centered */}
+      <div className="relative z-10 flex flex-col items-center gap-6">
+        <div className="flex items-center gap-4 w-full justify-center max-w-sm ml-8 md:ml-0 md:max-w-xl">
+          <div className="relative size-16 transform -rotate-3 rounded-md border-2 border-white/20 p-1 shadow-lg flex-shrink-0">
+            <Image src="/annfernee.jpg" alt="Photo of Annfernee" layout="fill" objectFit="cover" className="rounded-sm" />
+          </div>
+          <div className="flex flex-col items-start text-left">
+            <h2 className="text-xl font-bold tracking-tight text-gray-950">Anfernee Pichardo</h2>
+            <p className="text-sm text-gray-600">Full stack developer • Venezuela (Remote)</p>
           </div>
         </div>
-
-        {/* Kitty's Avatar + Name */}
-        <div className="absolute bottom-0 left-0 flex items-center gap-4">
-          <div className="relative size-20 rounded-full overflow-hidden border-2 border-white shadow-lg">
-            <Image
-              src="/kitty.jpg" // Replace with your cat's photo
-              alt="Photo of Kitty the cat"
-              layout="fill"
-              objectFit="cover"
-            />
-          </div>
-          <p className="font-semibold text-zinc-800">Kitty</p>
+        <div className="flex flex-col items-center gap-2 max-w-sm">
+          <h1 className="text-2xl font-bold tracking-tight text-gray-950">Want to test a new product?</h1>
+          <p className="mt-2 text-base text-gray-700">I turn ideas into production-grade web apps in Next.js. Modular, scalable, and optimized.</p>
         </div>
       </div>
 
-      {/* Text content section */}
-      <div className="max-w-xl">
-        <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-zinc-800">
-          Need to build and test your new product <span className="text-pink-500">as fast as possible?</span>
-        </h2>
-        <p className="mt-4 text-lg text-zinc-600">I design and develop modular, scalable, and high-performance web applications with Next.js, turning your vision into a reality.</p>
-      </div>
-
-      {/* Call to Action Button with Magic UI ShineBorder */}
-      <ShineBorder className="text-center text-xl font-bold capitalize" color={["#FF0080", "#FF4D4D", "#FF8C00"]}>
-        <a href="/annfernee-cv.pdf" download>
-          <Button size="lg" className="px-8 py-6">
-            Download CV
-          </Button>
+      {/* Footer section (Socials & Email) with z-10 to be on top */}
+      <div className="absolute bottom-4 z-10 flex flex-col items-center gap-4">
+        <div className="flex items-center gap-4">
+          <a href="https://github.com/AnferneeDev" target="_blank" rel="noopener noreferrer" className="p-2 bg-gray-700 border border-gray-600 rounded-md text-white hover:bg-gray-600 hover:border-gray-500 transition-colors">
+            <Github className="size-5" />
+          </a>
+          <a href="https://x.com/AnferneeDev" target="_blank" rel="noopener noreferrer" className="p-2 bg-gray-700 border border-gray-600 rounded-md text-white hover:bg-gray-600 hover:border-gray-500 transition-colors">
+            <Twitter className="size-5" />
+          </a>
+        </div>
+        <a href="mailto:anfernee.developer@gmail.com" className="text-sm font-bold text-pink-500 hover:underline">
+          anfernee.developer@gmail.com
         </a>
-      </ShineBorder>
+      </div>
     </div>
   );
 }
