@@ -109,7 +109,7 @@ export default function Home() {
       </motion.div>
 
       {/* AboutMe Section */}
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: Math.max(transitionProgress - 0.1, 0) }} transition={{ duration: 0 }}>
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: Math.max(transitionProgress - 0.001, 0) }} transition={{ duration: 0 }}>
         <AboutMe />
       </motion.div>
     </>
