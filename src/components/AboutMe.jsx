@@ -26,7 +26,7 @@ export default function AboutMe() {
         <div className="flex flex-col gap-5 text-left">
           {/* CHANGE: Added text shadow for a subtle glow */}
           <p className="text-base md:text-lg text-white leading-relaxed [text-shadow:0_0_6px_rgba(255,255,255,0.3)]">
-            I started learning to code three months ago. I found the best way to learn was by building, so I made three tools to solve problems I had. I just enjoy making things that are genuinely useful.
+            I found the best way to learn was by building, so I made three tools to solve problems I had. I just enjoy making things that are genuinely useful.
           </p>
 
           <p className="text-base md:text-lg text-white leading-relaxed [text-shadow:0_0_6px_rgba(255,255,255,0.3)]">
