@@ -23,7 +23,7 @@ export const projects = [
     href: "/",
     imageUrl: ["/C1.png", "/C2.png", "/C3.png", "/C4.png", "/C5.png"],
     tech: ["Electron", "TypeScript", "React", "SQLite", "Node.js", "Git"],
-    deploymentUrl: "https://github.com/AnferneeDev/Pomodoro/releases",
+    deploymentUrl: "https://github.com/AnferneeDev/Clarity/releases",
   },
   {
     Icon: Star,
