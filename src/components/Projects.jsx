@@ -13,7 +13,7 @@ const Projects = () => {
       technologies: ["Electron", "React", "Express.js", "Socket.io", "Tailwind CSS", "TypeScript"],
       githubUrl: "https://github.com/AnferneeDev/Local-Link",
       demoUrl: "https://github.com/AnferneeDev/Local-Link/releases",
-      isDemoLive: false, // Shows "Download" button
+      isDemoLive: false,
     },
     {
       title: "OfflineRates",
