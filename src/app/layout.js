@@ -1,4 +1,5 @@
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/react";
 
 export const metadata = {
   title: "Anfernee - Portfolio",
@@ -12,6 +13,8 @@ export default function RootLayout({ children }) {
         {/* All the AIM LINE divs have been REMOVED from this file */}
 
         <main className="h-screen overflow-y-scroll">{children}</main>
+
+        <Analytics />
       </body>
     </html>
   );
