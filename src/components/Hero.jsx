@@ -1,7 +1,6 @@
 import { Github, Linkedin, Mail, Twitter } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-// Update these links to your real information
 const socialLinks = [
   { icon: Github, href: "https://github.com/AnferneeDev", label: "GitHub" },
   { icon: Linkedin, href: "https://www.linkedin.com/in/anfernee-pichardo-0787a637a/", label: "LinkedIn" },
