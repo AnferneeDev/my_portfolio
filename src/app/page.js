@@ -1,9 +1,9 @@
-import Hero from "@/components/Hero";
-import Projects from "@/components/Projects";
+import Hero from "@/components/sections/Hero";
+import Projects from "@/components/sections/Projects";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-background">
+    <main className="bg-background">
       <Hero />
       <Projects />
     </main>
