@@ -6,7 +6,20 @@ import { Code2, Database, Globe, Smartphone, Github, ExternalLink, Download } fr
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 
-const projects = [
+import { LucideIcon } from "lucide-react";
+
+interface Project {
+  title: string;
+  description: string;
+  imageUrl: string;
+  icon: LucideIcon;
+  technologies: string[];
+  githubUrl: string;
+  demoUrl: string;
+  isDemoLive: boolean;
+}
+
+const projects: Project[] = [
   {
     title: "Local Link",
     description: "Desktop utility that creates a private local network for sharing files and text between devices via QR code. No internet required.",
@@ -49,8 +62,8 @@ const projects = [
   },
 ];
 
-const ProjectCard = ({ project, index }) => {
-  const ref = useRef(null);
+const ProjectCard = ({ project, index }: { project: Project; index: number }) => {
+  const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["0 1", "1.3 1"],
@@ -103,14 +116,14 @@ const ProjectCard = ({ project, index }) => {
         </div>
 
         <div className="flex gap-4 pt-4">
-          <Button variant="outline" className="gap-2 border-border/50 hover:bg-primary/5" asChild>
+          <Button variant="outline" size="default" className="gap-2 border-border/50 hover:bg-primary/5" asChild>
             <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
               <Github className="w-4 h-4" />
               Source
             </a>
           </Button>
 
-          <Button className="gap-2 bg-foreground text-background hover:bg-foreground/90 transition-all shadow-none" asChild>
+          <Button variant="default" size="default" className="gap-2 bg-foreground text-background hover:bg-foreground/90 transition-all shadow-none" asChild>
             <a href={project.isDemoLive ? project.demoUrl : project.demoUrl} target="_blank" rel="noopener noreferrer">
               {project.isDemoLive ? (
                 <>

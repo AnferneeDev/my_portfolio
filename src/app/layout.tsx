@@ -19,7 +19,11 @@ export const metadata = {
   description: "Portfolio of Anfernee Pichardo, a full-stack developer specializing in Next.js, React Native, and Node.js.",
 };
 
-export default function RootLayout({ children }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en" className="scroll-smooth">
       <body

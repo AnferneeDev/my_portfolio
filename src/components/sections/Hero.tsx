@@ -4,7 +4,15 @@ import { Github, Linkedin, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 
-const socialLinks = [
+import { LucideIcon } from "lucide-react";
+
+interface SocialLink {
+  icon: LucideIcon;
+  href: string;
+  label: string;
+}
+
+const socialLinks: SocialLink[] = [
   { icon: Github, href: "https://github.com/AnferneeDev", label: "GitHub" },
   { icon: Linkedin, href: "https://www.linkedin.com/in/anfernee-pichardo-0787a637a/", label: "LinkedIn" },
   { icon: Mail, href: "mailto:anfernee.developer@gmail.com", label: "Email" },
@@ -19,12 +27,12 @@ const container = {
       delayChildren: 0.2,
     },
   },
-};
+} as const;
 
 const item = {
   hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 100, damping: 15 } },
-};
+  show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 100, damping: 15 } as const },
+} as const;
 
 const Hero = () => {
   return (
@@ -50,8 +58,8 @@ const Hero = () => {
           </motion.div>
 
           <motion.div variants={item}>
-            <p className="text-base md:text-lg text-muted-foreground max-w-lg leading-relaxed font-light">
-              Experienced in building robust systems with React, Next.js, React Native, Node.js, and PostgreSQL. I craft digital experiences with a focus on deep technical understanding and intentional design.
+            <p className="text-base md:text-lg text-muted-foreground max-w-xl leading-relaxed font-light">
+              Full-Stack Developer with experience building production features for payment platforms, AWS Lambda functions, and CI/CD pipelines. Specialized in Laravel, Next.js, and TypeScript, with a focus on writing clean, maintainable code and solving real business problems.
             </p>
           </motion.div>
 
