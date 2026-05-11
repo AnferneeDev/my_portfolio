@@ -1,0 +1,80 @@
+{
+  "Hero": {
+    "title1": "Anfernee",
+    "title2": "Pichardo.",
+    "role": "Desarrollador Full-Stack",
+    "description": "Desarrollador Full-Stack con experiencia en la creación de funciones de producción para plataformas de pago, funciones AWS Lambda y pipelines de CI/CD. Especializado en Laravel, Next.js y TypeScript, con un enfoque en escribir código limpio y mantenible, resolviendo problemas de negocio reales.",
+    "scroll": "Deslizar"
+  },
+  "Projects": {
+    "title": "Trabajos Seleccionados.",
+    "subtitle": "Una colección de soluciones robustas de stack completo construidas con arquitectura moderna.",
+    "source": "Código",
+    "demo": "Demo en Vivo",
+    "download": "Descargar",
+    "items": {
+      "local-link": {
+        "title": "Local Link",
+        "description": "Utilidad de escritorio que crea una red local privada para compartir archivos y texto entre dispositivos mediante código QR. No requiere internet."
+      },
+      "offline-rates": {
+        "title": "OfflineRates",
+        "description": "Aplicación móvil enfocada en el uso sin conexión para consultar precios de servicios hospitalarios. Se sincroniza con Supabase y almacena datos localmente mediante SQLite para un acceso 100% offline."
+      },
+      "clear-feed": {
+        "title": "Clear Feed",
+        "description": "Cliente de YouTube enfocado en la productividad que elimina recomendaciones y distracciones. Incluye feeds cronológicos, gestión de canales y caché."
+      },
+      "clarity": {
+        "title": "Clarity",
+        "description": "Una aplicación moderna de Pomodoro y seguimiento de tiempo para Windows que reside en la bandeja del sistema. Incluye estadísticas detalladas, capacidad offline y gestión de tareas."
+      }
+    }
+  },
+  "Experience": {
+    "title": "Experiencia Profesional.",
+    "subtitle": "Construyendo funciones de grado de producción y resolviendo problemas de negocio complejos.",
+    "types": {
+      "remote": "Remoto"
+    },
+    "items": {
+      "widening": {
+        "company": "Widening.io",
+        "role": "Desarrollador Full-Stack",
+        "period": "Nov 2025 – Presente",
+        "description": [
+          "Arquitecté e implementé pipelines de despliegue CI/CD automatizados para infraestructura desacoplada (Next.js + Laravel) en cPanel.",
+          "Integré la pasarela de pago AZUL para la firma segura de transacciones y callbacks de estado.",
+          "Construí funciones para la plataforma Stripe Connect, incluyendo el registro de comerciantes vía OAuth y almacenamiento automatizado de tokens.",
+          "Desarrollé una API 'Shadow Admin' para separar la lógica administrativa sensible, mejorando la seguridad.",
+          "Creé scripts de sincronización de datos para HubSpot, Pipedrive y Salesforce.",
+          "Desarrollé el frontend del App Marketplace con barras laterales interactivas para datos financieros externos."
+        ]
+      },
+      "dmc": {
+        "company": "Dhaka Medical Center",
+        "role": "Contratista",
+        "period": "Oct 2025 – Nov 2025",
+        "description": [
+          "Desarrollé una aplicación móvil de seguimiento hospitalario con enfoque offline utilizando React Native y SQLite.",
+          "Ejecuté una migración completa de infraestructura de Render a Supabase.",
+          "Desarrollé nuevos esquemas de base de datos y establecí sincronización en tiempo real con paneles de administración.",
+          "Reduje los costos de alojamiento del cliente en un 100% mediante una migración de infraestructura optimizada."
+        ]
+      }
+    }
+  },
+  "Navigation": {
+    "projects": "Proyectos",
+    "experience": "Experiencia",
+    "contact": "Contacto"
+  },
+  "Common": {
+    "greeting": "Hola, soy",
+    "contactMe": "Contáctame"
+  },
+  "Footer": {
+    "builtWith": "Construido con Next.js",
+    "intent": "Diseñado y Construido con intención."
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "Hero": {
+    "title1": "Anfernee",
+    "title2": "Pichardo.",
+    "role": "Full-Stack Developer",
+    "description": "Full-Stack Developer with experience building production features for payment platforms, AWS Lambda functions, and CI/CD pipelines. Specialized in Laravel, Next.js, and TypeScript, with a focus on writing clean, maintainable code and solving real business problems.",
+    "scroll": "Scroll"
+  },
+  "Projects": {
+    "title": "Selected Works.",
+    "subtitle": "A collection of robust, full-stack solutions built with modern architecture.",
+    "source": "Source",
+    "demo": "Live Demo",
+    "download": "Download",
+    "items": {
+      "local-link": {
+        "title": "Local Link",
+        "description": "Desktop utility that creates a private local network for sharing files and text between devices via QR code. No internet required."
+      },
+      "offline-rates": {
+        "title": "OfflineRates",
+        "description": "Offline-first mobile app for browsing hospital service prices. Syncs with Supabase and stores data locally via SQLite for 100% offline access."
+      },
+      "clear-feed": {
+        "title": "Clear Feed",
+        "description": "Productivity-focused YouTube client that removes recommendations and distractions. Features chronological feeds, channel management, and caching."
+      },
+      "clarity": {
+        "title": "Clarity",
+        "description": "A modern Pomodoro and time-tracking app for Windows that lives in your system tray. Features detailed stats, offline capability, and task management."
+      }
+    }
+  },
+  "Experience": {
+    "title": "Professional Experience.",
+    "subtitle": "Building production-grade features and solving complex business problems.",
+    "types": {
+      "remote": "Remote"
+    },
+    "items": {
+      "widening": {
+        "company": "Widening.io",
+        "role": "Full-Stack Developer",
+        "period": "Nov 2025 – Present",
+        "description": [
+          "Architected and implemented automated CI/CD deployment pipelines for decoupled infrastructure (Next.js + Laravel) on cPanel.",
+          "Integrated AZUL Payment Gateway for secure transaction signing and status callbacks.",
+          "Built Stripe Connect platform features, including merchant OAuth onboarding and automated token storage.",
+          "Developed a 'Shadow Admin' API to separate sensitive administrative logic, enhancing security.",
+          "Created data synchronization scripts for HubSpot, Pipedrive, and Salesforce.",
+          "Developed App Marketplace frontend with interactive sidebars for external financial data."
+        ]
+      },
+      "dmc": {
+        "company": "Dhaka Medical Center",
+        "role": "Contractor",
+        "period": "Oct 2025 – Nov 2025",
+        "description": [
+          "Engineered an offline-first mobile hospital tracking application using React Native and SQLite.",
+          "Executed a complete infrastructure migration from Render to Supabase.",
+          "Developed new database schemas and established real-time sync with admin dashboards.",
+          "Reduced client hosting costs by 100% through optimized infrastructure migration."
+        ]
+      }
+    }
+  },
+  "Navigation": {
+    "projects": "Projects",
+    "experience": "Experience",
+    "contact": "Contact"
+  },
+  "Common": {
+    "greeting": "Hi, I'm",
+    "contactMe": "Contact Me"
+  },
+  "Footer": {
+    "builtWith": "Built with Next.js",
+    "intent": "Designed & Engineered with intent."
+  }
+}

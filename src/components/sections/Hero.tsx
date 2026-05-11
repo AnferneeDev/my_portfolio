@@ -3,6 +3,7 @@
 import { Github, Linkedin, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 
 import { LucideIcon } from "lucide-react";
 
@@ -35,6 +36,8 @@ const item = {
 } as const;
 
 const Hero = () => {
+  const t = useTranslations("Hero");
+
   return (
     <section className="min-h-screen flex items-center justify-center px-6 py-20 relative overflow-hidden">
       {/* Subtle background element */}
@@ -49,17 +52,17 @@ const Hero = () => {
         <div className="space-y-8 order-2 md:order-1">
           <motion.div variants={item} className="space-y-4">
             <h1 className="text-5xl md:text-7xl font-serif font-bold tracking-tighter leading-[1.1] text-foreground">
-              Anfernee<br />
-              <span className="text-muted-foreground">Pichardo.</span>
+              {t("title1")}<br />
+              <span className="text-muted-foreground">{t("title2")}</span>
             </h1>
             <p className="text-xl md:text-2xl font-light tracking-tight text-foreground">
-              Full-Stack Developer
+              {t("role")}
             </p>
           </motion.div>
 
           <motion.div variants={item}>
             <p className="text-base md:text-lg text-muted-foreground max-w-xl leading-relaxed font-light">
-              Full-Stack Developer with experience building production features for payment platforms, AWS Lambda functions, and CI/CD pipelines. Specialized in Laravel, Next.js, and TypeScript, with a focus on writing clean, maintainable code and solving real business problems.
+              {t("description")}
             </p>
           </motion.div>
 
@@ -106,7 +109,7 @@ const Hero = () => {
         transition={{ delay: 1.5, duration: 1 }}
         className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-sm text-muted-foreground"
       >
-        <span className="font-mono text-xs uppercase tracking-widest">Scroll</span>
+        <span className="font-mono text-xs uppercase tracking-widest">{t("scroll")}</span>
         <motion.div 
           animate={{ y: [0, 8, 0] }} 
           transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}

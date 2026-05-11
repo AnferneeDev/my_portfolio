@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Code2, Database, Globe, Smartphone, Github, ExternalLink, Download } from "lucide-react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
+import { useTranslations } from "next-intl";
 
 import { LucideIcon } from "lucide-react";
 
@@ -19,50 +20,8 @@ interface Project {
   isDemoLive: boolean;
 }
 
-const projects: Project[] = [
-  {
-    title: "Local Link",
-    description: "Desktop utility that creates a private local network for sharing files and text between devices via QR code. No internet required.",
-    imageUrl: "/projects/locallink.gif",
-    icon: Database,
-    technologies: ["Electron", "React", "Express.js", "Socket.io", "Tailwind CSS"],
-    githubUrl: "https://github.com/AnferneeDev/Local-Link",
-    demoUrl: "https://github.com/AnferneeDev/Local-Link/releases",
-    isDemoLive: false,
-  },
-  {
-    title: "OfflineRates",
-    description: "Offline-first mobile app for browsing hospital service prices. Syncs with Supabase and stores data locally via SQLite for 100% offline access.",
-    imageUrl: "/projects/offlinerates.gif",
-    icon: Smartphone,
-    technologies: ["React Native", "Expo", "Supabase", "SQLite", "NativeWind"],
-    githubUrl: "https://github.com/AnferneeDev/OfflineRates",
-    demoUrl: "https://github.com/AnferneeDev/OfflineRates",
-    isDemoLive: false,
-  },
-  {
-    title: "Clear Feed",
-    description: "Productivity-focused YouTube client that removes recommendations and distractions. Features chronological feeds, channel management, and caching.",
-    imageUrl: "/projects/clearfeed.gif",
-    icon: Globe,
-    technologies: ["Next.js", "Clerk", "Redis", "Tailwind CSS", "shadcn/ui"],
-    githubUrl: "https://github.com/AnferneeDev/Clear_Feed",
-    demoUrl: "https://clear-feed.vercel.app",
-    isDemoLive: true,
-  },
-  {
-    title: "Clarity",
-    description: "A modern Pomodoro and time-tracking app for Windows that lives in your system tray. Features detailed stats, offline capability, and task management.",
-    imageUrl: "/projects/clarity.gif",
-    icon: Code2,
-    technologies: ["Electron", "React", "TypeScript", "Vite", "shadcn/ui"],
-    githubUrl: "https://github.com/AnferneeDev/Clarity",
-    demoUrl: "https://github.com/AnferneeDev/Clarity/releases",
-    isDemoLive: false,
-  },
-];
-
 const ProjectCard = ({ project, index }: { project: Project; index: number }) => {
+  const t = useTranslations("Projects");
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -119,7 +78,7 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
           <Button variant="outline" size="default" className="gap-2 border-border/50 hover:bg-primary/5" asChild>
             <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
               <Github className="w-4 h-4" />
-              Source
+              {t("source")}
             </a>
           </Button>
 
@@ -128,12 +87,12 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
               {project.isDemoLive ? (
                 <>
                   <ExternalLink className="w-4 h-4" />
-                  Live Demo
+                  {t("demo")}
                 </>
               ) : (
                 <>
                   <Download className="w-4 h-4" />
-                  Download
+                  {t("download")}
                 </>
               )}
             </a>
@@ -145,6 +104,51 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
 };
 
 const Projects = () => {
+  const t = useTranslations("Projects");
+
+  const projects: Project[] = [
+    {
+      title: t("items.local-link.title"),
+      description: t("items.local-link.description"),
+      imageUrl: "/projects/locallink.gif",
+      icon: Database,
+      technologies: ["Electron", "React", "Express.js", "Socket.io", "Tailwind CSS"],
+      githubUrl: "https://github.com/AnferneeDev/Local-Link",
+      demoUrl: "https://github.com/AnferneeDev/Local-Link/releases",
+      isDemoLive: false,
+    },
+    {
+      title: t("items.offline-rates.title"),
+      description: t("items.offline-rates.description"),
+      imageUrl: "/projects/offlinerates.gif",
+      icon: Smartphone,
+      technologies: ["React Native", "Expo", "Supabase", "SQLite", "NativeWind"],
+      githubUrl: "https://github.com/AnferneeDev/OfflineRates",
+      demoUrl: "https://github.com/AnferneeDev/OfflineRates",
+      isDemoLive: false,
+    },
+    {
+      title: t("items.clear-feed.title"),
+      description: t("items.clear-feed.description"),
+      imageUrl: "/projects/clearfeed.gif",
+      icon: Globe,
+      technologies: ["Next.js", "Clerk", "Redis", "Tailwind CSS", "shadcn/ui"],
+      githubUrl: "https://github.com/AnferneeDev/Clear_Feed",
+      demoUrl: "https://clear-feed.vercel.app",
+      isDemoLive: true,
+    },
+    {
+      title: t("items.clarity.title"),
+      description: t("items.clarity.description"),
+      imageUrl: "/projects/clarity.gif",
+      icon: Code2,
+      technologies: ["Electron", "React", "TypeScript", "Vite", "shadcn/ui"],
+      githubUrl: "https://github.com/AnferneeDev/Clarity",
+      demoUrl: "https://github.com/AnferneeDev/Clarity/releases",
+      isDemoLive: false,
+    },
+  ];
+
   return (
     <section id="projects" className="min-h-screen px-6 py-32 bg-background relative">
       <div className="max-w-6xl mx-auto space-y-24">
@@ -155,7 +159,7 @@ const Projects = () => {
             viewport={{ once: true }}
             className="text-4xl md:text-6xl font-serif font-bold tracking-tighter"
           >
-            Selected Works.
+            {t("title")}
           </motion.h2>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
@@ -163,7 +167,7 @@ const Projects = () => {
             viewport={{ once: true, margin: "-100px" }}
             className="text-muted-foreground text-xl max-w-xl font-light"
           >
-            A collection of robust, full-stack solutions built with modern architecture.
+            {t("subtitle")}
           </motion.p>
         </div>
 

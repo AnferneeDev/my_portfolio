@@ -2,39 +2,30 @@
 
 import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
-
-const experiences = [
-  {
-    company: "Widening.io",
-    role: "Full-Stack Developer",
-    period: "Nov 2025 – Present",
-    type: "Remote",
-    description: [
-      "Architected and implemented automated CI/CD deployment pipelines for decoupled infrastructure (Next.js + Laravel) on cPanel.",
-      "Integrated AZUL Payment Gateway for secure transaction signing and status callbacks.",
-      "Built Stripe Connect platform features, including merchant OAuth onboarding and automated token storage.",
-      "Developed a 'Shadow Admin' API to separate sensitive administrative logic, enhancing security.",
-      "Created data synchronization scripts for HubSpot, Pipedrive, and Salesforce.",
-      "Developed App Marketplace frontend with interactive sidebars for external financial data."
-    ],
-    skills: ["Next.js", "Laravel", "AWS", "CI/CD", "Stripe", "CRM Integration"]
-  },
-  {
-    company: "Dhaka Medical Center",
-    role: "Contractor",
-    period: "Oct 2025 – Nov 2025",
-    type: "Remote",
-    description: [
-      "Engineered an offline-first mobile hospital tracking application using React Native and SQLite.",
-      "Executed a complete infrastructure migration from Render to Supabase.",
-      "Developed new database schemas and established real-time sync with admin dashboards.",
-      "Reduced client hosting costs by 100% through optimized infrastructure migration."
-    ],
-    skills: ["React Native", "SQLite", "Supabase", "Infrastructure Migration"]
-  }
-];
+import { useTranslations } from "next-intl";
 
 const Experience = () => {
+  const t = useTranslations("Experience");
+
+  const experiences = [
+    {
+      company: t("items.widening.company"),
+      role: t("items.widening.role"),
+      period: t("items.widening.period"),
+      type: t("types.remote"),
+      description: t.raw("items.widening.description") as string[],
+      skills: ["Next.js", "Laravel", "AWS", "CI/CD", "Stripe", "CRM Integration"]
+    },
+    {
+      company: t("items.dmc.company"),
+      role: t("items.dmc.role"),
+      period: t("items.dmc.period"),
+      type: t("types.remote"),
+      description: t.raw("items.dmc.description") as string[],
+      skills: ["React Native", "SQLite", "Supabase", "Infrastructure Migration"]
+    }
+  ];
+
   return (
     <section id="experience" className="py-24 px-6 bg-secondary/20">
       <div className="max-w-6xl mx-auto space-y-16">
@@ -45,7 +36,7 @@ const Experience = () => {
             viewport={{ once: true }}
             className="text-4xl md:text-5xl font-serif font-bold tracking-tighter"
           >
-            Professional Experience.
+            {t("title")}
           </motion.h2>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
@@ -53,7 +44,7 @@ const Experience = () => {
             viewport={{ once: true }}
             className="text-muted-foreground text-lg max-w-xl font-light"
           >
-            Building production-grade features and solving complex business problems.
+            {t("subtitle")}
           </motion.p>
         </div>
 
