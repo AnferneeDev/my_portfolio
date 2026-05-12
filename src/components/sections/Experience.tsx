@@ -1,14 +1,16 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m, useReducedMotion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import { useTranslations } from "next-intl";
 
 const Experience = () => {
   const t = useTranslations("Experience");
+  const shouldReduceMotion = useReducedMotion();
 
   const experiences = [
     {
+      id: "widening",
       company: t("items.widening.company"),
       role: t("items.widening.role"),
       period: t("items.widening.period"),
@@ -17,6 +19,7 @@ const Experience = () => {
       skills: ["Next.js", "Laravel", "AWS", "CI/CD", "Stripe", "CRM Integration"]
     },
     {
+      id: "dmc",
       company: t("items.dmc.company"),
       role: t("items.dmc.role"),
       period: t("items.dmc.period"),
@@ -30,29 +33,29 @@ const Experience = () => {
     <section id="experience" className="py-24 px-6 bg-secondary/20">
       <div className="max-w-6xl mx-auto space-y-16">
         <div className="space-y-4">
-          <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
+          <m.h2 
+            initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-4xl md:text-5xl font-serif font-bold tracking-tighter"
+            className="text-4xl md:text-5xl font-serif font-semibold tracking-tighter"
           >
             {t("title")}
-          </motion.h2>
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
+          </m.h2>
+          <m.p 
+            initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="text-muted-foreground text-lg max-w-xl font-light"
           >
             {t("subtitle")}
-          </motion.p>
+          </m.p>
         </div>
 
         <div className="space-y-12">
           {experiences.map((exp, index) => (
-            <motion.div 
-              key={exp.company}
-              initial={{ opacity: 0, x: -20 }}
+            <m.div 
+              key={exp.id}
+              initial={{ opacity: 0, x: shouldReduceMotion ? 0 : -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ delay: index * 0.1 }}
               viewport={{ once: true }}
@@ -72,14 +75,14 @@ const Experience = () => {
               </div>
 
               <ul className="space-y-4">
-                {exp.description.map((item, i) => (
-                  <li key={i} className="flex gap-4 text-muted-foreground leading-relaxed font-light">
+                {exp.description.map((item) => (
+                  <li key={item.substring(0, 20)} className="flex gap-4 text-muted-foreground leading-relaxed font-light">
                     <span className="text-primary mt-1.5">•</span>
                     <span>{item}</span>
                   </li>
                 ))}
               </ul>
-            </motion.div>
+            </m.div>
           ))}
         </div>
       </div>

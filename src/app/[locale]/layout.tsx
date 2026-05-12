@@ -7,6 +7,7 @@ import {NextIntlClientProvider} from 'next-intl';
 import {getMessages, setRequestLocale} from 'next-intl/server';
 import {routing} from '@/i18n/routing';
 import {notFound} from 'next/navigation';
+import { LazyMotion, domAnimation } from "framer-motion";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -54,12 +55,14 @@ export default async function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased pt-16 flex flex-col min-h-screen`}
       >
         <NextIntlClientProvider messages={messages}>
-          <Header />
-          <div className="flex-1">
-            {children}
-          </div>
-          <Footer />
-          <Analytics />
+          <LazyMotion features={domAnimation}>
+            <Header />
+            <div className="flex-1">
+              {children}
+            </div>
+            <Footer />
+            <Analytics />
+          </LazyMotion>
         </NextIntlClientProvider>
       </body>
     </html>

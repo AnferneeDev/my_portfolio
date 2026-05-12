@@ -10,8 +10,13 @@ export default getRequestConfig(async ({requestLocale}) => {
     locale = routing.defaultLocale;
   }
  
+  // Map locales to their respective message files for better bundle optimization
+  const messages = locale === 'es' 
+    ? (await import('../../messages/es.json')).default
+    : (await import('../../messages/en.json')).default;
+
   return {
     locale,
-    messages: (await import(`../../messages/${locale}.json`)).default
+    messages
   };
 });

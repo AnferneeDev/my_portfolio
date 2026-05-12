@@ -2,7 +2,7 @@
 
 import { Github, Linkedin, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
+import { m, useReducedMotion } from "framer-motion";
 import { useTranslations } from "next-intl";
 
 import { LucideIcon } from "lucide-react";
@@ -30,63 +30,64 @@ const container = {
   },
 } as const;
 
-const item = {
-  hidden: { opacity: 0, y: 20 },
+const item = (shouldReduceMotion: boolean | null) => ({
+  hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 20 },
   show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 100, damping: 15 } as const },
-} as const;
+});
 
 const Hero = () => {
   const t = useTranslations("Hero");
+  const shouldReduceMotion = useReducedMotion();
 
   return (
     <section className="min-h-screen flex items-center justify-center px-6 py-20 relative overflow-hidden">
       {/* Subtle background element */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl -z-10" />
+      <div className="absolute top-1/4 left-1/4 size-96 bg-primary/5 rounded-full blur-3xl -z-10" />
 
-      <motion.div 
+      <m.div 
         variants={container} 
         initial="hidden" 
         animate="show" 
         className="max-w-4xl w-full grid md:grid-cols-[1fr_auto] gap-12 items-center"
       >
         <div className="space-y-8 order-2 md:order-1">
-          <motion.div variants={item} className="space-y-4">
-            <h1 className="text-5xl md:text-7xl font-serif font-bold tracking-tighter leading-[1.1] text-foreground">
+          <m.div variants={item(shouldReduceMotion)} className="space-y-4">
+            <h1 className="text-5xl md:text-7xl font-serif font-semibold tracking-tighter leading-[1.1] text-foreground">
               {t("title1")}<br />
               <span className="text-muted-foreground">{t("title2")}</span>
             </h1>
             <p className="text-xl md:text-2xl font-light tracking-tight text-foreground">
               {t("role")}
             </p>
-          </motion.div>
+          </m.div>
 
-          <motion.div variants={item}>
+          <m.div variants={item(shouldReduceMotion)}>
             <p className="text-base md:text-lg text-muted-foreground max-w-xl leading-relaxed font-light">
               {t("description")}
             </p>
-          </motion.div>
+          </m.div>
 
-          <motion.div variants={item} className="flex gap-4 items-center pt-4">
+          <m.div variants={item(shouldReduceMotion)} className="flex gap-4 items-center pt-4">
             {socialLinks.map((social) => (
-              <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }} key={social.label}>
+              <m.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }} key={social.label}>
                 <Button 
                   variant="outline" 
                   size="icon" 
-                  className="w-12 h-12 rounded-full border-border/50 bg-background/50 backdrop-blur-sm hover:border-primary hover:bg-primary/5 hover:text-primary transition-all duration-300" 
+                  className="size-12 rounded-full border-border/50 bg-background/50 backdrop-blur-sm hover:border-primary hover:bg-primary/5 hover:text-primary transition-all duration-300" 
                   asChild
                 >
                   <a href={social.href} target="_blank" rel="noopener noreferrer" aria-label={social.label}>
-                    <social.icon className="w-5 h-5" />
+                    <social.icon className="size-5" />
                   </a>
                 </Button>
-              </motion.div>
+              </m.div>
             ))}
-          </motion.div>
+          </m.div>
         </div>
 
-        <motion.div variants={item} className="order-1 md:order-2 flex justify-start md:justify-end">
+        <m.div variants={item(shouldReduceMotion)} className="order-1 md:order-2 flex justify-start md:justify-end">
           <div className="relative group">
-            <motion.div 
+            <m.div 
               whileHover={{ rotate: 2, scale: 1.02 }}
               transition={{ type: "spring", stiffness: 300, damping: 20 }}
               className="relative z-10"
@@ -94,28 +95,28 @@ const Hero = () => {
               <img 
                 src="/anfernee.jpg" 
                 alt="Anfernee Pichardo" 
-                className="w-40 h-40 md:w-56 md:h-56 rounded-2xl object-cover border border-border shadow-2xl grayscale group-hover:grayscale-0 transition-all duration-700" 
+                className="size-40 md:size-56 rounded-2xl object-cover border border-border shadow-2xl grayscale group-hover:grayscale-0 transition-all duration-700" 
               />
-            </motion.div>
+            </m.div>
             {/* Offset decorative block */}
             <div className="absolute inset-0 bg-primary/10 rounded-2xl translate-x-4 translate-y-4 -z-10 transition-transform duration-500 group-hover:translate-x-6 group-hover:translate-y-6" />
           </div>
-        </motion.div>
-      </motion.div>
+        </m.div>
+      </m.div>
 
-      <motion.div 
+      <m.div 
         initial={{ opacity: 0 }} 
         animate={{ opacity: 1 }} 
         transition={{ delay: 1.5, duration: 1 }}
         className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-sm text-muted-foreground"
       >
         <span className="font-mono text-xs uppercase tracking-widest">{t("scroll")}</span>
-        <motion.div 
+        <m.div 
           animate={{ y: [0, 8, 0] }} 
           transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
           className="w-px h-12 bg-gradient-to-b from-muted-foreground/50 to-transparent"
         />
-      </motion.div>
+      </m.div>
     </section>
   );
 };
