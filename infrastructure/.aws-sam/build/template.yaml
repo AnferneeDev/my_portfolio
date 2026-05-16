@@ -1,0 +1,63 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Backend for AWS Cloud Resume Challenge
+Globals:
+  Function:
+    Timeout: 5
+    MemorySize: 128
+Resources:
+  VisitorTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: PortfolioVisitors
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+      - AttributeName: id
+        AttributeType: S
+      KeySchema:
+      - AttributeName: id
+        KeyType: HASH
+  ResumeApi:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      CorsConfiguration:
+        AllowOrigins:
+        - https://anfernee.dev
+        - http://localhost:3000
+        AllowMethods:
+        - GET
+        - OPTIONS
+        AllowHeaders:
+        - '*'
+        MaxAge: 600
+  VisitorFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: VisitorFunction
+      Handler: app.lambda_handler
+      Runtime: python3.11
+      Architectures:
+      - arm64
+      Environment:
+        Variables:
+          TABLE_NAME:
+            Ref: VisitorTable
+      Events:
+        ApiEvent:
+          Type: HttpApi
+          Properties:
+            ApiId:
+              Ref: ResumeApi
+            Path: /visitors
+            Method: GET
+      Policies:
+      - DynamoDBCrudPolicy:
+          TableName:
+            Ref: VisitorTable
+    Metadata:
+      SamResourceId: VisitorFunction
+Outputs:
+  ApiEndpoint:
+    Description: API Gateway endpoint URL
+    Value:
+      Fn::Sub: https://${ResumeApi}.execute-api.${AWS::Region}.amazonaws.com/visitors

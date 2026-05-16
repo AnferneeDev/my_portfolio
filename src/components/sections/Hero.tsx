@@ -1,7 +1,8 @@
 "use client";
 
-import { Github, Linkedin, Mail } from "lucide-react";
+import { Github, Linkedin, Mail, Cloud } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import VisitorCounter from "@/components/ui/VisitorCounter";
 import { m, useReducedMotion } from "framer-motion";
 import { useTranslations } from "next-intl";
 
@@ -82,6 +83,14 @@ const Hero = () => {
                 </Button>
               </m.div>
             ))}
+          </m.div>
+
+          <m.div variants={item(shouldReduceMotion)} className="flex flex-col gap-3 pt-6 border-t border-border/40">
+            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              <Cloud className="w-4 h-4 text-primary" />
+              <span>Working towards <strong>AWS Certified Developer Associate (DVA-C02)</strong></span>
+            </div>
+            <VisitorCounter />
           </m.div>
         </div>
 
