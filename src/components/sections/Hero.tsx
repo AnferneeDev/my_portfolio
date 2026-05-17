@@ -41,7 +41,7 @@ const Hero = () => {
   const shouldReduceMotion = useReducedMotion();
 
   return (
-    <section className="min-h-screen flex items-center justify-center px-6 py-20 relative overflow-hidden">
+    <section className="min-h-screen flex items-center justify-center px-6 pt-20 pb-32 md:pb-20 relative overflow-hidden">
       {/* Subtle background element */}
       <div className="absolute top-1/4 left-1/4 size-96 bg-primary/5 rounded-full blur-3xl -z-10" />
 
@@ -117,7 +117,7 @@ const Hero = () => {
         initial={{ opacity: 0 }} 
         animate={{ opacity: 1 }} 
         transition={{ delay: 1.5, duration: 1 }}
-        className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-sm text-muted-foreground"
+        className="absolute bottom-4 md:bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-sm text-muted-foreground"
       >
         <span className="font-mono text-xs uppercase tracking-widest">{t("scroll")}</span>
         <m.div 
