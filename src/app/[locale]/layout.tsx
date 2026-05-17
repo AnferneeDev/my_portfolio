@@ -2,7 +2,6 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "../globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import { Analytics } from "@vercel/analytics/react";
 import {NextIntlClientProvider} from 'next-intl';
 import {getMessages, setRequestLocale} from 'next-intl/server';
 import {routing} from '@/i18n/routing';
@@ -61,7 +60,6 @@ export default async function RootLayout({
               {children}
             </div>
             <Footer />
-            <Analytics />
           </LazyMotion>
         </NextIntlClientProvider>
       </body>
