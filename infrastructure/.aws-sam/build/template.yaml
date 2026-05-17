@@ -23,6 +23,7 @@ Resources:
       CorsConfiguration:
         AllowOrigins:
         - https://anfernee.dev
+        - https://www.anfernee.dev
         - http://localhost:3000
         AllowMethods:
         - GET
