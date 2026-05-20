@@ -19,7 +19,7 @@ export default function VisitorCounter() {
         if (!response.ok) throw new Error('Network response was not ok');
         
         const data = await response.json();
-        if (data.visits) {
+        if (data.visits !== undefined && data.visits !== null) {
           setVisits(data.visits);
         }
       } catch (error) {
