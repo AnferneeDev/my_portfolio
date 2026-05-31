@@ -1,0 +1,53 @@
+name: anfernee
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: us-east-1
+
+      - name: Fetch API URL
+        id: api-url
+        run: |
+          URL=$(aws cloudformation describe-stacks \
+            --stack-name portfolio-prod-backend \
+            --query "Stacks[0].Outputs[?OutputKey=='ApiEndpoint'].OutputValue" \
+            --output text)
+          echo "url=$URL" >> "$GITHUB_OUTPUT"
+
+      - name: Build Next.js
+        run: |
+          export NEXT_PUBLIC_API_URL="${{ steps.api-url.outputs.url }}"
+          npm run build
+          cp out/en.html out/index.html
+
+      - name: Deploy to S3
+        run: |
+          aws s3 sync out/ s3://portfolio-prod-storage-446383247881-us-east-1 --delete
+
+      - name: Invalidate CloudFront
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id EOZNKY6O002Z7 \
+            --paths "/*"
