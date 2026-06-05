@@ -12,6 +12,11 @@ Parameters:
   CertificateArn:
     Type: String
     Description: The ARN of the ACM certificate to use for CloudFront
+  SecretAuthString:
+    Type: String
+    NoEcho: true
+    Default: "Basic REPLACE_ME"
+    Description: Base64 encoded auth string for the secret area
 
 Resources:
   # 1. S3 Bucket for Static Files
@@ -94,6 +99,21 @@ Resources:
             S3OriginConfig:
               OriginAccessIdentity: ""
             OriginAccessControlId: !GetAtt CloudFrontOriginAccessControl.Id
+        CacheBehaviors:
+          - PathPattern: /Shymaa*
+            TargetOriginId: S3Origin
+            ViewerProtocolPolicy: redirect-to-https
+            AllowedMethods:
+              - GET
+              - HEAD
+            CachedMethods:
+              - GET
+              - HEAD
+            CachePolicyId: 658327ea-f89d-4fab-a63d-7e88639e58f6 # Managed-CachingOptimized
+            ResponseHeadersPolicyId: !Ref SecurityHeadersPolicy
+            FunctionAssociations:
+              - EventType: viewer-request
+                FunctionARN: !GetAtt SecretAuthFunction.FunctionARN
         DefaultCacheBehavior:
           TargetOriginId: S3Origin
           ViewerProtocolPolicy: redirect-to-https
@@ -114,6 +134,33 @@ Resources:
           - ErrorCode: 404
             ResponseCode: 200
             ResponsePagePath: /index.html
+
+  # 7. CloudFront Function for Basic Auth on /shaimaa
+  SecretAuthFunction:
+    Type: AWS::CloudFront::Function
+    Properties:
+      Name: !Sub "${AWS::StackName}-secret-auth"
+      AutoPublish: true
+      FunctionConfig:
+        Comment: "Basic Auth for secret path"
+        Runtime: cloudfront-js-1.0
+      FunctionCode: !Sub |
+        function handler(event) {
+            var request = event.request;
+            var headers = request.headers;
+            var authString = "${SecretAuthString}";
+            if (typeof headers.authorization === 'undefined' || headers.authorization.value !== authString) {
+                return {
+                    statusCode: 401,
+                    statusDescription: 'Unauthorized',
+                    headers: { 'www-authenticate': { value: 'Basic realm="Secure Area"' } }
+                };
+            }
+            if (request.uri === '/Shymaa' || request.uri === '/Shymaa/') {
+                request.uri = '/Shymaa/index.html';
+            }
+            return request;
+        }
 
   # 7. Route53 Record (Root)
   WebsiteDNSRecord:
