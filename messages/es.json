@@ -17,9 +17,13 @@
         "title": "Local Link",
         "description": "Utilidad de escritorio que crea una red local privada para compartir archivos y texto entre dispositivos mediante código QR. No requiere internet."
       },
-      "offline-rates": {
-        "title": "OfflineRates",
-        "description": "Aplicación móvil enfocada en el uso sin conexión para consultar precios de servicios hospitalarios. Se sincroniza con Supabase y almacena datos localmente mediante SQLite para un acceso 100% offline."
+      "ai-or-not": {
+        "title": "AI or Not",
+        "description": "Un juego que desafía a los jugadores a distinguir imágenes generadas por IA de fotografías reales. Multiplataforma (web + móvil) con tablas de clasificación y modos de desafío."
+      },
+      "n8n-automation": {
+        "title": "n8n Automation",
+        "description": "Automatización de flujos de trabajo n8n auto-alojada en AWS EC2 mediante CloudFormation, asegurada tras un Cloudflare Tunnel sin puertos de entrada abiertos."
       },
       "clear-feed": {
         "title": "Clear Feed",

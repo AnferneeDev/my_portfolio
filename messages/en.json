@@ -17,9 +17,13 @@
         "title": "Local Link",
         "description": "Desktop utility that creates a private local network for sharing files and text between devices via QR code. No internet required."
       },
-      "offline-rates": {
-        "title": "OfflineRates",
-        "description": "Offline-first mobile app for browsing hospital service prices. Syncs with Supabase and stores data locally via SQLite for 100% offline access."
+      "ai-or-not": {
+        "title": "AI or Not",
+        "description": "A game that challenges players to distinguish AI-generated images from real photographs. Multi-platform (web + mobile) with leaderboards and challenge modes."
+      },
+      "n8n-automation": {
+        "title": "n8n Automation",
+        "description": "Self-hosted n8n workflow automation deployed on AWS EC2 via CloudFormation, secured behind a Cloudflare Tunnel with zero open inbound ports."
       },
       "clear-feed": {
         "title": "Clear Feed",

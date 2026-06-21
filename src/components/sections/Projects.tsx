@@ -2,7 +2,7 @@
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Code2, Database, Globe, Smartphone, Github, ExternalLink, Download } from "lucide-react";
+import { Code2, Database, Globe, Github, ExternalLink, Download, Bot, Workflow } from "lucide-react";
 import { m, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import { useRef } from "react";
 import { useTranslations } from "next-intl";
@@ -124,15 +124,26 @@ const Projects = () => {
       isDemoLive: false,
     },
     {
-      id: "offline-rates",
-      title: t("items.offline-rates.title"),
-      description: t("items.offline-rates.description"),
-      imageUrl: "/projects/offlinerates.gif",
-      icon: Smartphone,
-      technologies: ["React Native", "Expo", "Supabase", "SQLite", "NativeWind"],
-      githubUrl: "https://github.com/AnferneeDev/OfflineRates",
-      demoUrl: "https://github.com/AnferneeDev/OfflineRates",
+      id: "ai-or-not",
+      title: t("items.ai-or-not.title"),
+      description: t("items.ai-or-not.description"),
+      imageUrl: "/projects/ai-or-not.jpg",
+      icon: Bot,
+      technologies: ["Next.js", "React Native", "Expo", "Tailwind CSS", "Amazon S3"],
+      githubUrl: "https://github.com/AnferneeDev/iaornot",
+      demoUrl: "https://github.com/AnferneeDev/iaornot",
       isDemoLive: false,
+    },
+    {
+      id: "n8n-automation",
+      title: t("items.n8n-automation.title"),
+      description: t("items.n8n-automation.description"),
+      imageUrl: "/projects/n8n-automation.png",
+      icon: Workflow,
+      technologies: ["Docker", "AWS CloudFormation", "Cloudflare Tunnel", "n8n", "EC2"],
+      githubUrl: "https://github.com/AnferneeDev/my-n8n",
+      demoUrl: "https://n8n.trato.help",
+      isDemoLive: true,
     },
     {
       id: "clear-feed",
