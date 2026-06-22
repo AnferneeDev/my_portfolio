@@ -10,6 +10,15 @@ const Experience = () => {
 
   const experiences = [
     {
+      id: "trato",
+      company: t("items.trato.company"),
+      role: t("items.trato.role"),
+      period: t("items.trato.period"),
+      type: t("types.remote"),
+      description: t.raw("items.trato.description") as string[],
+      skills: ["React Native", "TypeScript", "React Navigation", "Mobile UI/UX", "Modular Architecture"]
+    },
+    {
       id: "widening",
       company: t("items.widening.company"),
       role: t("items.widening.role"),

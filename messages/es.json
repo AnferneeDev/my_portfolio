@@ -42,6 +42,19 @@
       "remote": "Remoto"
     },
     "items": {
+      "trato": {
+        "company": "Trato",
+        "role": "Desarrollador React Native",
+        "period": "May 2026 – Presente",
+        "description": [
+          "Desarrollé el sistema de mensajería central con soporte para múltiples formatos, contenido multimedia y funciones interactivas.",
+          "Construí un módulo multimedia con integración de cámara, flujos de grabación y descubrimiento de contenido.",
+          "Implementé un módulo de gestión de solicitudes estructuradas con formularios configurables y flujos de envío.",
+          "Creé un sistema de gestión de perfiles empresariales con visualización de catálogo y pantallas de información organizacional.",
+          "Diseñé un sistema de tokens de diseño centralizado y una librería de componentes reutilizables garantizando consistencia visual.",
+          "Implementé control de acceso basado en roles a través de múltiples módulos de la aplicación."
+        ]
+      },
       "widening": {
         "company": "Widening.io",
         "role": "Desarrollador Full-Stack",

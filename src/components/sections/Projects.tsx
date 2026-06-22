@@ -138,7 +138,7 @@ const Projects = () => {
       id: "n8n-automation",
       title: t("items.n8n-automation.title"),
       description: t("items.n8n-automation.description"),
-      imageUrl: "/projects/n8n-automation.png",
+      imageUrl: "/projects/n8n-automation.svg",
       icon: Workflow,
       technologies: ["Docker", "AWS CloudFormation", "Cloudflare Tunnel", "n8n", "EC2"],
       githubUrl: "https://github.com/AnferneeDev/my-n8n",

@@ -42,6 +42,19 @@
       "remote": "Remote"
     },
     "items": {
+      "trato": {
+        "company": "Trato",
+        "role": "React Native Developer",
+        "period": "May 2026 – Present",
+        "description": [
+          "Developed the core messaging system supporting multiple message formats, rich media, and interactive features.",
+          "Built a multimedia module with camera integration, recording workflows, and content discovery.",
+          "Implemented a structured request management module with configurable forms and submission flows.",
+          "Created a business profile management system with catalog display and organizational information screens.",
+          "Engineered a centralized design token system and reusable component library ensuring visual consistency.",
+          "Implemented role-based access and permissions across multiple application modules."
+        ]
+      },
       "widening": {
         "company": "Widening.io",
         "role": "Full-Stack Developer",
