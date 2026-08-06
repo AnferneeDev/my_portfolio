@@ -44,10 +44,10 @@ jobs:
 
       - name: Deploy to S3
         run: |
-          aws s3 sync out/ s3://portfolio-prod-storage-446383247881-us-east-1 --delete
+          aws s3 sync out/ s3://portfolio-prod-storage-769429582539-us-east-1 --delete
 
       - name: Invalidate CloudFront
         run: |
           aws cloudfront create-invalidation \
-            --distribution-id EOZNKY6O002Z7 \
+            --distribution-id E3C31ZFHNWA6XJ \
             --paths "/*"
