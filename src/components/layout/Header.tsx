@@ -23,7 +23,6 @@ const Header = () => {
           <div className="w-px h-4 bg-border" />
           
           <div className="flex items-center gap-4">
-            {/* Language Switcher */}
             <Button variant="ghost" size="sm" className="gap-2 px-2 hover:bg-primary/5" asChild>
               <Link href={pathname} locale={locale === 'en' ? 'es' : 'en'}>
                 <Languages className="size-4" />

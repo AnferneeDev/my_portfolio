@@ -10,7 +10,6 @@ export default async function Home({
 }) {
   const {locale} = await params;
   
-  // Enable static rendering
   setRequestLocale(locale);
 
   return (

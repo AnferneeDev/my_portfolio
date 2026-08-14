@@ -43,7 +43,6 @@ const Hero = () => {
 
   return (
     <section className="min-h-screen flex flex-col items-center justify-center px-6 pt-24 pb-16 relative overflow-hidden">
-      {/* Subtle background element */}
       <div className="absolute top-1/4 left-1/4 size-96 bg-primary/5 rounded-full blur-3xl -z-10" />
 
       <m.div 
@@ -52,7 +51,6 @@ const Hero = () => {
         animate="show" 
         className="max-w-4xl w-full space-y-8"
       >
-        {/* Top Header Row: Titles, Bio & Photo */}
         <div className="grid md:grid-cols-[1fr_auto] gap-8 md:gap-12 items-start md:items-center">
           <div className="space-y-6 order-2 md:order-1">
             <m.div variants={item(shouldReduceMotion)} className="space-y-3">
@@ -71,7 +69,6 @@ const Hero = () => {
               </p>
             </m.div>
 
-            {/* Education Mini-Section */}
             <m.div variants={item(shouldReduceMotion)}>
               <div className="inline-flex flex-wrap sm:flex-nowrap items-center gap-2 sm:gap-2.5 px-3.5 py-2 sm:py-1.5 rounded-xl sm:rounded-full bg-card/60 border border-border/50 backdrop-blur-sm text-xs sm:text-sm text-muted-foreground shadow-sm leading-normal">
                 <GraduationCap className="size-4 text-primary shrink-0" />
@@ -101,7 +98,6 @@ const Hero = () => {
             </m.div>
           </div>
 
-          {/* Profile Photo at Top */}
           <m.div variants={item(shouldReduceMotion)} className="order-1 md:order-2 flex justify-start md:justify-end">
             <div className="relative group">
               <m.div 
@@ -115,18 +111,15 @@ const Hero = () => {
                   className="size-36 md:size-48 rounded-2xl object-cover border border-border shadow-2xl grayscale group-hover:grayscale-0 transition-all duration-700" 
                 />
               </m.div>
-              {/* Offset decorative block */}
               <div className="absolute inset-0 bg-primary/10 rounded-2xl translate-x-4 translate-y-4 -z-10 transition-transform duration-500 group-hover:translate-x-6 group-hover:translate-y-6" />
             </div>
           </m.div>
         </div>
 
-        {/* Full-width GitHub Graph Row (no scroll required on desktop) */}
         <m.div variants={item(shouldReduceMotion)} className="w-full">
           <GitHubCalendar username="AnferneeDev" />
         </m.div>
 
-        {/* Bottom Bar: AWS Certification & Visitor Counter */}
         <m.div variants={item(shouldReduceMotion)} className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-6 border-t border-border/40">
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <Cloud className="w-4 h-4 text-primary" />
@@ -136,7 +129,6 @@ const Hero = () => {
         </m.div>
       </m.div>
 
-      {/* Scroll indicator with safe non-overlapping spacing */}
       <m.div 
         initial={{ opacity: 0 }} 
         animate={{ opacity: 1 }} 

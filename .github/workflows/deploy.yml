@@ -34,11 +34,17 @@ jobs:
             --stack-name portfolio-prod-backend \
             --query "Stacks[0].Outputs[?OutputKey=='ApiEndpoint'].OutputValue" \
             --output text)
+          CALENDAR_URL=$(aws cloudformation describe-stacks \
+            --stack-name portfolio-prod-backend \
+            --query "Stacks[0].Outputs[?OutputKey=='GithubCalendarEndpoint'].OutputValue" \
+            --output text)
           echo "url=$URL" >> "$GITHUB_OUTPUT"
+          echo "calendar_url=$CALENDAR_URL" >> "$GITHUB_OUTPUT"
 
       - name: Build Next.js
         run: |
           export NEXT_PUBLIC_API_URL="${{ steps.api-url.outputs.url }}"
+          export NEXT_PUBLIC_GITHUB_CALENDAR_URL="${{ steps.api-url.outputs.calendar_url }}"
           npm run build
           cp out/en.html out/index.html
 

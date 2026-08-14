@@ -31,45 +31,14 @@ export default function GitHubCalendar({ username = 'AnferneeDev' }: { username?
     let isMounted = true;
 
     const fetchRealGitHubData = async () => {
-      const token = process.env.NEXT_PUBLIC_GITHUB_TOKEN;
+      const calendarUrl = process.env.NEXT_PUBLIC_GITHUB_CALENDAR_URL;
 
       try {
-        if (token) {
-          // Official GitHub GraphQL API (fetches 100% real private + public commits)
-          const query = `
-            query($username: String!) {
-              user(login: $username) {
-                contributionsCollection {
-                  contributionCalendar {
-                    totalContributions
-                    weeks {
-                      contributionDays {
-                        date
-                        contributionCount
-                        contributionLevel
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          `;
-
-          const res = await fetch('https://api.github.com/graphql', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `bearer ${token}`,
-            },
-            body: JSON.stringify({
-              query,
-              variables: { username },
-            }),
-          });
-
-          if (!res.ok) throw new Error(`GitHub GraphQL error ${res.status}`);
+        if (calendarUrl) {
+          const res = await fetch(calendarUrl);
+          if (!res.ok) throw new Error(`Calendar API error ${res.status}`);
           const json = await res.json();
-          const calendar = json.data?.user?.contributionsCollection?.contributionCalendar;
+          const calendar = json?.totalContributions !== undefined ? json : null;
 
           if (calendar && isMounted) {
             const mappedWeeks: ContributionDay[][] = calendar.weeks.map(
@@ -98,7 +67,6 @@ export default function GitHubCalendar({ username = 'AnferneeDev' }: { username?
           }
         }
 
-        // Fallback scraper if no token is provided
         const res = await fetch(`https://github-contributions-api.jogruber.de/v4/${username}?y=last`);
         if (!res.ok) throw new Error('Failed to fetch contributions');
         const json = await res.json();
@@ -132,7 +100,6 @@ export default function GitHubCalendar({ username = 'AnferneeDev' }: { username?
     };
   }, [username]);
 
-  // Extract month labels based on the first day of each week column
   const monthLabels = useMemo(() => {
     if (!data?.weeks || data.weeks.length === 0) return [];
     const labels: { month: string; colIndex: number }[] = [];
@@ -155,7 +122,6 @@ export default function GitHubCalendar({ username = 'AnferneeDev' }: { username?
     return labels;
   }, [data]);
 
-  // Native GitHub color palette with clear distinction for empty days vs active days
   const getLevelColor = (day: ContributionDay) => {
     if (!day || day.count === 0 || day.level === 0) {
       return 'bg-neutral-200/70 dark:bg-white/[0.08] border-neutral-300/40 dark:border-white/[0.08] hover:border-neutral-400 dark:hover:border-white/30';
@@ -182,7 +148,6 @@ export default function GitHubCalendar({ username = 'AnferneeDev' }: { username?
       ref={containerRef}
       className="relative w-full rounded-xl border border-border/40 bg-card/40 backdrop-blur-sm p-4 space-y-3"
     >
-      {/* Dynamic Floating Tooltip */}
       {hoveredDay && (
         <div
           style={{
@@ -209,7 +174,6 @@ export default function GitHubCalendar({ username = 'AnferneeDev' }: { username?
         </div>
       )}
 
-      {/* Header */}
       <div className="flex items-center justify-between gap-2 text-xs text-muted-foreground">
         <a
           href={`https://github.com/${username}`}
@@ -225,7 +189,6 @@ export default function GitHubCalendar({ username = 'AnferneeDev' }: { username?
         </span>
       </div>
 
-      {/* Main Heatmap Container */}
       <div className="overflow-x-auto pb-1 pt-1 scrollbar-none md:overflow-x-visible flex justify-start md:justify-center w-full">
         {loading ? (
           <div className="flex gap-[3px] animate-pulse py-4">
@@ -239,7 +202,6 @@ export default function GitHubCalendar({ username = 'AnferneeDev' }: { username?
           </div>
         ) : (
           <div className="inline-block min-w-max">
-            {/* Month Labels */}
             <div className="flex text-[9px] font-mono text-muted-foreground/70 mb-1.5 pl-6 h-3 relative">
               {monthLabels.map((lbl, idx) => (
                 <span
@@ -252,9 +214,7 @@ export default function GitHubCalendar({ username = 'AnferneeDev' }: { username?
               ))}
             </div>
 
-            {/* Grid with Weekday Labels */}
             <div className="flex gap-2 items-start">
-              {/* Day Labels (Mon, Wed, Fri) */}
               <div className="flex flex-col gap-[3px] text-[8px] font-mono text-muted-foreground/60 select-none pt-[13px]">
                 <span className="h-[10px] leading-[10px]">Mon</span>
                 <span className="h-[10px] leading-[10px] invisible">Tue</span>
@@ -264,7 +224,6 @@ export default function GitHubCalendar({ username = 'AnferneeDev' }: { username?
                 <span className="h-[10px] leading-[10px] invisible">Sat</span>
               </div>
 
-              {/* 52-53 Week Columns */}
               <div className="flex gap-[3px]">
                 {data?.weeks.map((week, weekIdx) => (
                   <div key={weekIdx} className="flex flex-col gap-[3px]">
@@ -297,7 +256,6 @@ export default function GitHubCalendar({ username = 'AnferneeDev' }: { username?
         )}
       </div>
 
-      {/* Legend & Footer */}
       <div className="flex items-center justify-between text-[10px] font-mono text-muted-foreground/80 pt-1 border-t border-border/20">
         <span>Activity in the last year</span>
         <div className="flex items-center gap-1.5">

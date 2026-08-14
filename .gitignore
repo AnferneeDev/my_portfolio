@@ -33,6 +33,10 @@ yarn-error.log*
 # env files (can opt-in for committing if needed)
 .env*
 
+# sam build artifacts
+/.aws-sam/
+infrastructure/.aws-sam/
+
 # vercel
 .vercel
 

@@ -32,7 +32,6 @@ export default function VisitorCounter() {
         }
       } catch {
         if (isDev && isMounted) {
-          // Provide mock count in development to prevent error overlays when remote API isn't accessible locally
           setVisits(1240);
         }
       }
