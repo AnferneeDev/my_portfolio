@@ -1,64 +1,201 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Transform: AWS::Serverless-2016-10-31
-Description: Backend for AWS Cloud Resume Challenge
-Globals:
-  Function:
-    Timeout: 5
-    MemorySize: 128
+Description: CloudFront and S3 infrastructure for Next.js Static Export
+Parameters:
+  DomainName:
+    Type: String
+    Default: anfernee.dev
+    Description: The domain name for the website
+  HostedZoneId:
+    Type: String
+    Description: The Route53 Hosted Zone ID for the domain
+  CertificateArn:
+    Type: String
+    Description: The ARN of the ACM certificate to use for CloudFront
+  SecretAuthString:
+    Type: String
+    NoEcho: true
+    Default: Basic REPLACE_ME
+    Description: Base64 encoded auth string for the secret area
 Resources:
-  VisitorTable:
-    Type: AWS::DynamoDB::Table
+  WebsiteBucket:
+    Type: AWS::S3::Bucket
     Properties:
-      TableName: PortfolioVisitors
-      BillingMode: PAY_PER_REQUEST
-      AttributeDefinitions:
-      - AttributeName: id
-        AttributeType: S
-      KeySchema:
-      - AttributeName: id
-        KeyType: HASH
-  ResumeApi:
-    Type: AWS::Serverless::HttpApi
+      BucketName:
+        Fn::Sub: portfolio-prod-storage-${AWS::AccountId}-${AWS::Region}
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+  CloudFrontOriginAccessControl:
+    Type: AWS::CloudFront::OriginAccessControl
     Properties:
-      CorsConfiguration:
-        AllowOrigins:
-        - https://anfernee.dev
-        - https://www.anfernee.dev
-        - http://localhost:3000
-        AllowMethods:
-        - GET
-        - OPTIONS
-        AllowHeaders:
-        - '*'
-        MaxAge: 600
-  VisitorFunction:
-    Type: AWS::Serverless::Function
+      OriginAccessControlConfig:
+        Name:
+          Fn::Sub: ${AWS::StackName}-oac
+        OriginAccessControlOriginType: s3
+        SigningBehavior: always
+        SigningProtocol: sigv4
+  WebsiteBucketPolicy:
+    Type: AWS::S3::BucketPolicy
     Properties:
-      CodeUri: VisitorFunction
-      Handler: app.lambda_handler
-      Runtime: python3.11
-      Architectures:
-      - arm64
-      Environment:
-        Variables:
-          TABLE_NAME:
-            Ref: VisitorTable
-      Events:
-        ApiEvent:
-          Type: HttpApi
-          Properties:
-            ApiId:
-              Ref: ResumeApi
-            Path: /visitors
-            Method: GET
-      Policies:
-      - DynamoDBCrudPolicy:
-          TableName:
-            Ref: VisitorTable
-    Metadata:
-      SamResourceId: VisitorFunction
+      Bucket:
+        Ref: WebsiteBucket
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service: cloudfront.amazonaws.com
+          Action: s3:GetObject
+          Resource:
+            Fn::Sub: ${WebsiteBucket.Arn}/*
+          Condition:
+            StringEquals:
+              AWS:SourceArn:
+                Fn::Sub: arn:aws:cloudfront::${AWS::AccountId}:distribution/${CloudFrontDistribution}
+  SecurityHeadersPolicy:
+    Type: AWS::CloudFront::ResponseHeadersPolicy
+    Properties:
+      ResponseHeadersPolicyConfig:
+        Name:
+          Fn::Sub: ${AWS::StackName}-security-headers
+        SecurityHeadersConfig:
+          StrictTransportSecurity:
+            AccessControlMaxAgeSec: 31536000
+            IncludeSubdomains: true
+            Preload: true
+            Override: true
+          XSSProtection:
+            Protection: true
+            ModeBlock: true
+            Override: true
+          FrameOptions:
+            FrameOption: DENY
+            Override: true
+          ContentTypeOptions:
+            Override: true
+  CloudFrontDistribution:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        Enabled: true
+        DefaultRootObject: index.html
+        Aliases:
+        - Ref: DomainName
+        - Fn::Sub: www.${DomainName}
+        ViewerCertificate:
+          AcmCertificateArn:
+            Ref: CertificateArn
+          SslSupportMethod: sni-only
+          MinimumProtocolVersion: TLSv1.2_2021
+        Origins:
+        - DomainName:
+            Fn::GetAtt:
+            - WebsiteBucket
+            - RegionalDomainName
+          Id: S3Origin
+          S3OriginConfig:
+            OriginAccessIdentity: ''
+          OriginAccessControlId:
+            Fn::GetAtt:
+            - CloudFrontOriginAccessControl
+            - Id
+        CacheBehaviors:
+        - PathPattern: /Shymaa*
+          TargetOriginId: S3Origin
+          ViewerProtocolPolicy: redirect-to-https
+          AllowedMethods:
+          - GET
+          - HEAD
+          CachedMethods:
+          - GET
+          - HEAD
+          CachePolicyId: 658327ea-f89d-4fab-a63d-7e88639e58f6
+          ResponseHeadersPolicyId:
+            Ref: SecurityHeadersPolicy
+          FunctionAssociations:
+          - EventType: viewer-request
+            FunctionARN:
+              Fn::GetAtt:
+              - SecretAuthFunction
+              - FunctionARN
+        DefaultCacheBehavior:
+          TargetOriginId: S3Origin
+          ViewerProtocolPolicy: redirect-to-https
+          AllowedMethods:
+          - GET
+          - HEAD
+          - OPTIONS
+          CachedMethods:
+          - GET
+          - HEAD
+          CachePolicyId: 658327ea-f89d-4fab-a63d-7e88639e58f6
+          ResponseHeadersPolicyId:
+            Ref: SecurityHeadersPolicy
+        CustomErrorResponses:
+        - ErrorCode: 403
+          ResponseCode: 200
+          ResponsePagePath: /index.html
+        - ErrorCode: 404
+          ResponseCode: 200
+          ResponsePagePath: /index.html
+  SecretAuthFunction:
+    Type: AWS::CloudFront::Function
+    Properties:
+      Name:
+        Fn::Sub: ${AWS::StackName}-secret-auth
+      AutoPublish: true
+      FunctionConfig:
+        Comment: Basic Auth for secret path
+        Runtime: cloudfront-js-1.0
+      FunctionCode:
+        Fn::Sub: "function handler(event) {\n    var request = event.request;\n  \
+          \  var headers = request.headers;\n    var authString = \"${SecretAuthString}\"\
+          ;\n    if (typeof headers.authorization === 'undefined' || headers.authorization.value\
+          \ !== authString) {\n        return {\n            statusCode: 401,\n  \
+          \          statusDescription: 'Unauthorized',\n            headers: { 'www-authenticate':\
+          \ { value: 'Basic realm=\"Secure Area\"' } }\n        };\n    }\n    if\
+          \ (request.uri === '/Shymaa' || request.uri === '/Shymaa/') {\n        request.uri\
+          \ = '/Shymaa/index.html';\n    }\n    return request;\n}\n"
+  WebsiteDNSRecord:
+    Type: AWS::Route53::RecordSet
+    Properties:
+      HostedZoneId:
+        Ref: HostedZoneId
+      Name:
+        Ref: DomainName
+      Type: A
+      AliasTarget:
+        HostedZoneId: Z2FDTNDATAQYW2
+        DNSName:
+          Fn::GetAtt:
+          - CloudFrontDistribution
+          - DomainName
+  WwwWebsiteDNSRecord:
+    Type: AWS::Route53::RecordSet
+    Properties:
+      HostedZoneId:
+        Ref: HostedZoneId
+      Name:
+        Fn::Sub: www.${DomainName}
+      Type: A
+      AliasTarget:
+        HostedZoneId: Z2FDTNDATAQYW2
+        DNSName:
+          Fn::GetAtt:
+          - CloudFrontDistribution
+          - DomainName
 Outputs:
-  ApiEndpoint:
-    Description: API Gateway endpoint URL
+  CloudFrontUrl:
+    Description: CloudFront Distribution URL
     Value:
-      Fn::Sub: https://${ResumeApi}.execute-api.${AWS::Region}.amazonaws.com/visitors
+      Fn::Sub: https://${CloudFrontDistribution.DomainName}
+  WebsiteUrl:
+    Description: Custom Domain URL
+    Value:
+      Fn::Sub: https://${DomainName}
+  BucketName:
+    Description: S3 Bucket Name
+    Value:
+      Ref: WebsiteBucket

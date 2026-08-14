@@ -7,27 +7,42 @@ export default function VisitorCounter() {
   const [visits, setVisits] = useState<number | null>(null);
 
   useEffect(() => {
-    const fetchVisits = async () => {
-      try {
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-        if (!apiUrl) {
-          console.warn("VisitorCounter: NEXT_PUBLIC_API_URL is not set in environment variables.");
-          return;
-        }
+    let isMounted = true;
 
+    const fetchVisits = async () => {
+      const isDev = process.env.NODE_ENV === 'development';
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
+      if (!apiUrl) {
+        if (isDev && isMounted) {
+          setVisits(1240);
+        }
+        return;
+      }
+
+      try {
         const response = await fetch(apiUrl);
-        if (!response.ok) throw new Error('Network response was not ok');
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
+        }
         
         const data = await response.json();
-        if (data.visits !== undefined && data.visits !== null) {
+        if (isMounted && data.visits !== undefined && data.visits !== null) {
           setVisits(data.visits);
         }
-      } catch (error) {
-        console.error("Failed to fetch visitor count", error);
+      } catch {
+        if (isDev && isMounted) {
+          // Provide mock count in development to prevent error overlays when remote API isn't accessible locally
+          setVisits(1240);
+        }
       }
     };
 
     fetchVisits();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   if (visits === null) return null;

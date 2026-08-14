@@ -3,7 +3,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Code2, Database, Globe, Github, ExternalLink, Download, Bot, Workflow } from "lucide-react";
-import { m, useScroll, useTransform, useReducedMotion } from "framer-motion";
+import { m, useInView, useReducedMotion } from "framer-motion";
 import { useRef } from "react";
 import { useTranslations } from "next-intl";
 
@@ -16,48 +16,51 @@ interface Project {
   imageUrl: string;
   icon: LucideIcon;
   technologies: string[];
-  githubUrl: string;
-  demoUrl: string;
-  isDemoLive: boolean;
+  githubUrl?: string;
+  demoUrl?: string;
+  isDemoLive?: boolean;
+  demoType?: "demo" | "play" | "download";
 }
 
 const ProjectCard = ({ project, index }: { project: Project; index: number }) => {
   const t = useTranslations("Projects");
-  const ref = useRef<HTMLDivElement>(null);
-  const shouldReduceMotion = useReducedMotion();
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["0 1", "1.3 1"],
+  const cardRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(cardRef, { 
+    amount: 0.35, 
+    margin: "-10% 0px -10% 0px" 
   });
-
-  const scaleProgress = useTransform(scrollYProgress, [0, 1], [0.8, 1]);
-  const opacityProgress = useTransform(scrollYProgress, [0, 1], [0.6, 1]);
+  const shouldReduceMotion = useReducedMotion();
   
   const isEven = index % 2 === 0;
 
   return (
     <m.div 
-      ref={ref}
-      style={{ 
-        scale: shouldReduceMotion ? 1 : scaleProgress, 
-        opacity: opacityProgress 
+      ref={cardRef}
+      initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 28 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ 
+        duration: 0.7, 
+        ease: [0.21, 0.47, 0.32, 0.98] 
       }}
       className={`flex flex-col ${isEven ? 'md:flex-row' : 'md:flex-row-reverse'} gap-8 md:gap-16 items-center py-12 border-b border-border/50 last:border-0`}
     >
-      <div className="w-full md:w-1/2 relative group rounded-xl overflow-hidden bg-muted/30 aspect-video">
+      <div className="w-full md:w-1/2 relative group rounded-xl overflow-hidden bg-muted/30 aspect-video border border-border/40">
         <m.div
-          whileHover={shouldReduceMotion ? {} : { scale: 1.05 }}
-          transition={{ duration: 0.7, ease: [0.33, 1, 0.68, 1] }}
+          whileHover={shouldReduceMotion ? {} : { scale: 1.02 }}
+          transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
           className="w-full h-full"
         >
           <img 
             src={project.imageUrl} 
             alt={project.title} 
-            className="w-full h-full object-cover grayscale-[0.2] group-hover:grayscale-0 transition-all duration-700 mix-blend-luminosity group-hover:mix-blend-normal" 
+            className={`w-full h-full object-cover transition-all duration-700 ease-out ${
+              isInView 
+                ? 'grayscale-0 contrast-100 opacity-100' 
+                : 'grayscale contrast-95 opacity-80 group-hover:grayscale-0 group-hover:opacity-100'
+            }`} 
           />
         </m.div>
-        {/* Subtle overlay */}
-        <div className="absolute inset-0 bg-background/10 group-hover:bg-transparent transition-colors duration-500 pointer-events-none" />
       </div>
 
       <div className="w-full md:w-1/2 space-y-6">
@@ -79,30 +82,46 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
           ))}
         </div>
 
-        <div className="flex gap-4 pt-4">
-          <Button variant="outline" size="default" className="gap-2 border-border/50 hover:bg-primary/5" asChild>
-            <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
-              <Github className="size-4" />
-              {t("source")}
-            </a>
-          </Button>
+        {(project.githubUrl || project.demoUrl) && (
+          <div className="flex gap-4 pt-4">
+            {project.githubUrl && (
+              <Button variant="outline" size="default" className="gap-2 border-border/50 hover:bg-primary/5" asChild>
+                <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
+                  <Github className="size-4" />
+                  {t("source")}
+                </a>
+              </Button>
+            )}
 
-          <Button variant="default" size="default" className="gap-2 bg-foreground text-background hover:bg-foreground/90 transition-all shadow-none" asChild>
-            <a href={project.isDemoLive ? project.demoUrl : project.demoUrl} target="_blank" rel="noopener noreferrer">
-              {project.isDemoLive ? (
-                <>
-                  <ExternalLink className="size-4" />
-                  {t("demo")}
-                </>
-              ) : (
-                <>
-                  <Download className="size-4" />
-                  {t("download")}
-                </>
-              )}
-            </a>
-          </Button>
-        </div>
+            {project.demoUrl && (
+              <Button variant="default" size="default" className="gap-2 bg-foreground text-background hover:bg-foreground/90 transition-all shadow-none" asChild>
+                <a href={project.demoUrl} target="_blank" rel="noopener noreferrer">
+                  {project.demoType === "download" ? (
+                    <>
+                      <Download className="size-4" />
+                      {t("download")}
+                    </>
+                  ) : project.demoType === "play" ? (
+                    <>
+                      <ExternalLink className="size-4" />
+                      {t("play")}
+                    </>
+                  ) : project.isDemoLive ? (
+                    <>
+                      <ExternalLink className="size-4" />
+                      {t("demo")}
+                    </>
+                  ) : (
+                    <>
+                      <Download className="size-4" />
+                      {t("download")}
+                    </>
+                  )}
+                </a>
+              </Button>
+            )}
+          </div>
+        )}
       </div>
     </m.div>
   );
@@ -130,9 +149,9 @@ const Projects = () => {
       imageUrl: "/projects/ai-or-not.jpg",
       icon: Bot,
       technologies: ["Next.js", "React Native", "Expo", "Tailwind CSS", "Amazon S3"],
-      githubUrl: "https://github.com/AnferneeDev/iaornot",
-      demoUrl: "https://github.com/AnferneeDev/iaornot",
-      isDemoLive: false,
+      demoUrl: "https://www.realitycheck.pics/",
+      demoType: "play",
+      isDemoLive: true,
     },
     {
       id: "n8n-automation",
@@ -141,9 +160,6 @@ const Projects = () => {
       imageUrl: "/projects/n8n-automation.svg",
       icon: Workflow,
       technologies: ["Docker", "AWS CloudFormation", "Cloudflare Tunnel", "n8n", "EC2"],
-      githubUrl: "https://github.com/AnferneeDev/my-n8n",
-      demoUrl: "https://n8n.trato.help",
-      isDemoLive: true,
     },
     {
       id: "clear-feed",
@@ -169,22 +185,26 @@ const Projects = () => {
     },
   ];
 
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <section id="projects" className="min-h-screen px-6 py-32 bg-background relative">
       <div className="max-w-6xl mx-auto space-y-24">
         <div className="space-y-4">
           <m.h2 
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: [0.21, 0.47, 0.32, 0.98] }}
             className="text-4xl md:text-6xl font-serif font-semibold tracking-tighter"
           >
             {t("title")}
           </m.h2>
           <m.p 
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 16 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.6, delay: 0.1, ease: [0.21, 0.47, 0.32, 0.98] }}
             className="text-muted-foreground text-xl max-w-xl font-light"
           >
             {t("subtitle")}

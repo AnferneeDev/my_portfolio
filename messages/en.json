@@ -11,6 +11,7 @@
     "subtitle": "A collection of robust, full-stack solutions built with modern architecture.",
     "source": "Source",
     "demo": "Live Demo",
+    "play": "Play Online",
     "download": "Download",
     "items": {
       "local-link": {
@@ -18,7 +19,7 @@
         "description": "Desktop utility that creates a private local network for sharing files and text between devices via QR code. No internet required."
       },
       "ai-or-not": {
-        "title": "AI or Not",
+        "title": "RealityCheck",
         "description": "A game that challenges players to distinguish AI-generated images from real photographs. Multi-platform (web + mobile) with leaderboards and challenge modes."
       },
       "n8n-automation": {

@@ -11,6 +11,7 @@
     "subtitle": "Una colección de soluciones robustas de stack completo construidas con arquitectura moderna.",
     "source": "Código",
     "demo": "Demo en Vivo",
+    "play": "Jugar en Línea",
     "download": "Descargar",
     "items": {
       "local-link": {
@@ -18,7 +19,7 @@
         "description": "Utilidad de escritorio que crea una red local privada para compartir archivos y texto entre dispositivos mediante código QR. No requiere internet."
       },
       "ai-or-not": {
-        "title": "AI or Not",
+        "title": "RealityCheck",
         "description": "Un juego que desafía a los jugadores a distinguir imágenes generadas por IA de fotografías reales. Multiplataforma (web + móvil) con tablas de clasificación y modos de desafío."
       },
       "n8n-automation": {
