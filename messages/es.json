@@ -3,7 +3,12 @@
     "title1": "Anfernee",
     "title2": "Pichardo.",
     "role": "Desarrollador Full-Stack",
-    "description": "Desarrollador Full-Stack con experiencia en la creación de funciones de producción para plataformas de pago, funciones AWS Lambda y pipelines de CI/CD. Especializado en Laravel, Next.js y TypeScript, con un enfoque en escribir código limpio y mantenible, resolviendo problemas de negocio reales.",
+    "description": "Ingeniero de Software Full-Stack con experiencia práctica en la creación de plataformas web y móviles de nivel de producción, flujos en la nube de AWS y pipelines de CI/CD robustos. Enfocado en desarrollar sistemas de alto rendimiento con Next.js, React Native, TypeScript y Laravel.",
+    "education": {
+      "degree": "Lic. en Ciencias de la Computación",
+      "school": "University of the People",
+      "graduation": "Graduación: Jun 2027"
+    },
     "scroll": "Deslizar"
   },
   "Projects": {

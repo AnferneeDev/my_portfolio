@@ -1,8 +1,9 @@
 "use client";
 
-import { Github, Linkedin, Mail, Cloud } from "lucide-react";
+import { Github, Linkedin, Mail, Cloud, GraduationCap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import VisitorCounter from "@/components/ui/VisitorCounter";
+import GitHubCalendar from "@/components/ui/GitHubCalendar";
 import { m, useReducedMotion } from "framer-motion";
 import { useTranslations } from "next-intl";
 
@@ -41,7 +42,7 @@ const Hero = () => {
   const shouldReduceMotion = useReducedMotion();
 
   return (
-    <section className="min-h-screen flex items-center justify-center px-6 pt-20 pb-32 md:pb-20 relative overflow-hidden">
+    <section className="min-h-screen flex flex-col items-center justify-center px-6 pt-24 pb-16 relative overflow-hidden">
       {/* Subtle background element */}
       <div className="absolute top-1/4 left-1/4 size-96 bg-primary/5 rounded-full blur-3xl -z-10" />
 
@@ -49,81 +50,104 @@ const Hero = () => {
         variants={container} 
         initial="hidden" 
         animate="show" 
-        className="max-w-4xl w-full grid md:grid-cols-[1fr_auto] gap-12 items-center"
+        className="max-w-4xl w-full space-y-8"
       >
-        <div className="space-y-8 order-2 md:order-1">
-          <m.div variants={item(shouldReduceMotion)} className="space-y-4">
-            <h1 className="text-5xl md:text-7xl font-serif font-semibold tracking-tighter leading-[1.1] text-foreground">
-              {t("title1")}<br />
-              <span className="text-muted-foreground">{t("title2")}</span>
-            </h1>
-            <p className="text-xl md:text-2xl font-light tracking-tight text-foreground">
-              {t("role")}
-            </p>
-          </m.div>
+        {/* Top Header Row: Titles, Bio & Photo */}
+        <div className="grid md:grid-cols-[1fr_auto] gap-8 md:gap-12 items-start md:items-center">
+          <div className="space-y-6 order-2 md:order-1">
+            <m.div variants={item(shouldReduceMotion)} className="space-y-3">
+              <h1 className="text-5xl md:text-7xl font-serif font-semibold tracking-tighter leading-[1.1] text-foreground">
+                {t("title1")}<br />
+                <span className="text-muted-foreground">{t("title2")}</span>
+              </h1>
+              <p className="text-xl md:text-2xl font-light tracking-tight text-foreground">
+                {t("role")}
+              </p>
+            </m.div>
 
-          <m.div variants={item(shouldReduceMotion)}>
-            <p className="text-base md:text-lg text-muted-foreground max-w-xl leading-relaxed font-light">
-              {t("description")}
-            </p>
-          </m.div>
+            <m.div variants={item(shouldReduceMotion)}>
+              <p className="text-base md:text-lg text-muted-foreground max-w-xl leading-relaxed font-light">
+                {t("description")}
+              </p>
+            </m.div>
 
-          <m.div variants={item(shouldReduceMotion)} className="flex gap-4 items-center pt-4">
-            {socialLinks.map((social) => (
-              <m.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }} key={social.label}>
-                <Button 
-                  variant="outline" 
-                  size="icon" 
-                  className="size-12 rounded-full border-border/50 bg-background/50 backdrop-blur-sm hover:border-primary hover:bg-primary/5 hover:text-primary transition-all duration-300" 
-                  asChild
-                >
-                  <a href={social.href} target="_blank" rel="noopener noreferrer" aria-label={social.label}>
-                    <social.icon className="size-5" />
-                  </a>
-                </Button>
+            {/* Education Mini-Section */}
+            <m.div variants={item(shouldReduceMotion)}>
+              <div className="inline-flex flex-wrap sm:flex-nowrap items-center gap-2 sm:gap-2.5 px-3.5 py-2 sm:py-1.5 rounded-xl sm:rounded-full bg-card/60 border border-border/50 backdrop-blur-sm text-xs sm:text-sm text-muted-foreground shadow-sm leading-normal">
+                <GraduationCap className="size-4 text-primary shrink-0" />
+                <span className="font-medium text-foreground">{t("education.degree")}</span>
+                <span className="hidden sm:inline text-muted-foreground/40">•</span>
+                <span>{t("education.school")}</span>
+                <span className="hidden sm:inline text-muted-foreground/40">•</span>
+                <span className="text-primary font-medium">{t("education.graduation")}</span>
+              </div>
+            </m.div>
+
+            <m.div variants={item(shouldReduceMotion)} className="flex gap-4 items-center pt-1">
+              {socialLinks.map((social) => (
+                <m.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }} key={social.label}>
+                  <Button 
+                    variant="outline" 
+                    size="icon" 
+                    className="size-12 rounded-full border-border/50 bg-background/50 backdrop-blur-sm hover:border-primary hover:bg-primary/5 hover:text-primary transition-all duration-300" 
+                    asChild
+                  >
+                    <a href={social.href} target="_blank" rel="noopener noreferrer" aria-label={social.label}>
+                      <social.icon className="size-5" />
+                    </a>
+                  </Button>
+                </m.div>
+              ))}
+            </m.div>
+          </div>
+
+          {/* Profile Photo at Top */}
+          <m.div variants={item(shouldReduceMotion)} className="order-1 md:order-2 flex justify-start md:justify-end">
+            <div className="relative group">
+              <m.div 
+                whileHover={{ rotate: 2, scale: 1.02 }}
+                transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                className="relative z-10"
+              >
+                <img 
+                  src="/anfernee.jpg" 
+                  alt="Anfernee Pichardo" 
+                  className="size-36 md:size-48 rounded-2xl object-cover border border-border shadow-2xl grayscale group-hover:grayscale-0 transition-all duration-700" 
+                />
               </m.div>
-            ))}
-          </m.div>
-
-          <m.div variants={item(shouldReduceMotion)} className="flex flex-col gap-3 pt-6 border-t border-border/40">
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <Cloud className="w-4 h-4 text-primary" />
-              <span>Working towards <strong>AWS Certified Developer Associate (DVA-C02)</strong></span>
+              {/* Offset decorative block */}
+              <div className="absolute inset-0 bg-primary/10 rounded-2xl translate-x-4 translate-y-4 -z-10 transition-transform duration-500 group-hover:translate-x-6 group-hover:translate-y-6" />
             </div>
-            <VisitorCounter />
           </m.div>
         </div>
 
-        <m.div variants={item(shouldReduceMotion)} className="order-1 md:order-2 flex justify-start md:justify-end">
-          <div className="relative group">
-            <m.div 
-              whileHover={{ rotate: 2, scale: 1.02 }}
-              transition={{ type: "spring", stiffness: 300, damping: 20 }}
-              className="relative z-10"
-            >
-              <img 
-                src="/anfernee.jpg" 
-                alt="Anfernee Pichardo" 
-                className="size-40 md:size-56 rounded-2xl object-cover border border-border shadow-2xl grayscale group-hover:grayscale-0 transition-all duration-700" 
-              />
-            </m.div>
-            {/* Offset decorative block */}
-            <div className="absolute inset-0 bg-primary/10 rounded-2xl translate-x-4 translate-y-4 -z-10 transition-transform duration-500 group-hover:translate-x-6 group-hover:translate-y-6" />
+        {/* Full-width GitHub Graph Row (no scroll required on desktop) */}
+        <m.div variants={item(shouldReduceMotion)} className="w-full">
+          <GitHubCalendar username="AnferneeDev" />
+        </m.div>
+
+        {/* Bottom Bar: AWS Certification & Visitor Counter */}
+        <m.div variants={item(shouldReduceMotion)} className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-6 border-t border-border/40">
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            <Cloud className="w-4 h-4 text-primary" />
+            <span>Working towards <strong>AWS Certified Developer Associate (DVA-C02)</strong></span>
           </div>
+          <VisitorCounter />
         </m.div>
       </m.div>
 
+      {/* Scroll indicator with safe non-overlapping spacing */}
       <m.div 
         initial={{ opacity: 0 }} 
         animate={{ opacity: 1 }} 
         transition={{ delay: 1.5, duration: 1 }}
-        className="absolute bottom-4 md:bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-sm text-muted-foreground"
+        className="pt-10 md:pt-14 pb-2 flex flex-col items-center gap-2 text-sm text-muted-foreground"
       >
         <span className="font-mono text-xs uppercase tracking-widest">{t("scroll")}</span>
         <m.div 
           animate={{ y: [0, 8, 0] }} 
           transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-          className="w-px h-12 bg-gradient-to-b from-muted-foreground/50 to-transparent"
+          className="w-px h-10 bg-gradient-to-b from-muted-foreground/50 to-transparent"
         />
       </m.div>
     </section>
