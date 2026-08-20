@@ -70,13 +70,35 @@ const Hero = () => {
             </m.div>
 
             <m.div variants={item(shouldReduceMotion)}>
-              <div className="inline-flex flex-wrap sm:flex-nowrap items-center gap-2 sm:gap-2.5 px-3.5 py-2 sm:py-1.5 rounded-xl sm:rounded-full bg-card/60 border border-border/50 backdrop-blur-sm text-xs sm:text-sm text-muted-foreground shadow-sm leading-normal">
-                <GraduationCap className="size-4 text-primary shrink-0" />
-                <span className="font-medium text-foreground">{t("education.degree")}</span>
-                <span className="hidden sm:inline text-muted-foreground/40">•</span>
-                <span>{t("education.school")}</span>
-                <span className="hidden sm:inline text-muted-foreground/40">•</span>
-                <span className="text-primary font-medium">{t("education.graduation")}</span>
+              <div className="relative overflow-hidden inline-flex flex-wrap sm:flex-nowrap items-center gap-2 sm:gap-2.5 px-3.5 py-2 sm:py-1.5 rounded-xl sm:rounded-full bg-card/60 border border-border/50 backdrop-blur-sm text-xs sm:text-sm text-muted-foreground shadow-sm leading-normal">
+                {/* Light reflection effect sweeping from left to right */}
+                <m.div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-0 select-none overflow-hidden rounded-[inherit]"
+                >
+                  <m.div
+                    initial={{ x: "-150%" }}
+                    animate={
+                      shouldReduceMotion
+                        ? { x: "-150%" }
+                        : { x: "250%" }
+                    }
+                    transition={{
+                      repeat: Infinity,
+                      repeatDelay: 3.5,
+                      duration: 1.8,
+                      ease: [0.4, 0, 0.2, 1],
+                    }}
+                    className="absolute inset-y-0 left-0 w-1/2 -skew-x-12 bg-gradient-to-r from-transparent via-foreground/10 dark:via-white/20 to-transparent"
+                  />
+                </m.div>
+
+                <GraduationCap className="size-4 text-primary shrink-0 relative z-10" />
+                <span className="font-medium text-foreground relative z-10">{t("education.degree")}</span>
+                <span className="hidden sm:inline text-muted-foreground/40 relative z-10">•</span>
+                <span className="relative z-10">{t("education.school")}</span>
+                <span className="hidden sm:inline text-muted-foreground/40 relative z-10">•</span>
+                <span className="text-primary font-medium relative z-10">{t("education.graduation")}</span>
               </div>
             </m.div>
 
