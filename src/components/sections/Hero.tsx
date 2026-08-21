@@ -71,7 +71,7 @@ const Hero = () => {
 
             <m.div variants={item(shouldReduceMotion)}>
               <div className="relative overflow-hidden inline-flex flex-wrap sm:flex-nowrap items-center gap-2 sm:gap-2.5 px-3.5 py-2 sm:py-1.5 rounded-xl sm:rounded-full bg-card/60 border border-border/50 backdrop-blur-sm text-xs sm:text-sm text-muted-foreground shadow-sm leading-normal">
-                {/* Light reflection effect sweeping from left to right */}
+                {/* Light reflection effect sweeping from left to right (happens first in cycle) */}
                 <m.div
                   aria-hidden="true"
                   className="pointer-events-none absolute inset-0 select-none overflow-hidden rounded-[inherit]"
@@ -81,12 +81,12 @@ const Hero = () => {
                     animate={
                       shouldReduceMotion
                         ? { x: "-150%" }
-                        : { x: "250%" }
+                        : { x: ["-150%", "250%", "250%"] }
                     }
                     transition={{
+                      duration: 5,
                       repeat: Infinity,
-                      repeatDelay: 3.5,
-                      duration: 1.8,
+                      times: [0, 0.24, 1],
                       ease: [0.4, 0, 0.2, 1],
                     }}
                     className="absolute inset-y-0 left-0 w-1/2 -skew-x-12 bg-gradient-to-r from-transparent via-foreground/10 dark:via-white/20 to-transparent"
@@ -103,16 +103,42 @@ const Hero = () => {
             </m.div>
 
             <m.div variants={item(shouldReduceMotion)} className="flex gap-4 items-center pt-1">
-              {socialLinks.map((social) => (
+              {socialLinks.map((social, index) => (
                 <m.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }} key={social.label}>
                   <Button 
                     variant="outline" 
                     size="icon" 
-                    className="size-12 rounded-full border-border/50 bg-background/50 backdrop-blur-sm hover:border-primary hover:bg-primary/5 hover:text-primary transition-all duration-300" 
+                    className="relative overflow-hidden size-12 rounded-full border-border/50 bg-card/60 backdrop-blur-sm shadow-sm hover:border-primary hover:bg-primary/5 hover:text-primary transition-all duration-300" 
                     asChild
                   >
                     <a href={social.href} target="_blank" rel="noopener noreferrer" aria-label={social.label}>
-                      <social.icon className="size-5" />
+                      {/* Light reflection effect sweeping from left to right (triggers sequentially after BS pill completes) */}
+                      <m.div
+                        aria-hidden="true"
+                        className="pointer-events-none absolute inset-0 select-none overflow-hidden rounded-full"
+                      >
+                        <m.div
+                          initial={{ x: "-150%" }}
+                          animate={
+                            shouldReduceMotion
+                              ? { x: "-150%" }
+                              : { x: ["-150%", "-150%", "250%", "250%"] }
+                          }
+                          transition={{
+                            duration: 5,
+                            repeat: Infinity,
+                            times: [
+                              0,
+                              (1.2 + index * 0.2) / 5,
+                              (1.8 + index * 0.2) / 5,
+                              1,
+                            ],
+                            ease: [0.4, 0, 0.2, 1],
+                          }}
+                          className="absolute inset-y-0 left-0 w-1/2 -skew-x-12 bg-gradient-to-r from-transparent via-foreground/10 dark:via-white/20 to-transparent"
+                        />
+                      </m.div>
+                      <social.icon className="size-5 relative z-10" />
                     </a>
                   </Button>
                 </m.div>
