@@ -42,6 +42,10 @@ function Button({
   size,
   asChild = false,
   ...props
+}: React.ComponentProps<"button"> & {
+  variant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link";
+  size?: "default" | "sm" | "lg" | "icon" | "icon-sm" | "icon-lg";
+  asChild?: boolean;
 }) {
   const Comp = asChild ? Slot : "button"
 

@@ -24,7 +24,7 @@ const Header = () => {
           
           <div className="flex items-center gap-4">
             <Button variant="ghost" size="sm" className="gap-2 px-2 hover:bg-primary/5" asChild>
-              <Link href={pathname} locale={locale === 'en' ? 'es' : 'en'}>
+              <Link href={pathname} locale={locale === 'en' ? 'es' : 'en'} aria-label="Switch language" aria-pressed={locale === 'en' ? 'true' : 'false'}>
                 <Languages className="size-4" />
                 <span className="uppercase text-[10px] font-semibold">{locale === 'en' ? 'ES' : 'EN'}</span>
               </Link>
@@ -32,13 +32,13 @@ const Header = () => {
 
             <div className="w-px h-4 bg-border" />
 
-            <a href="https://github.com/AnferneeDev" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">
+            <a href="https://github.com/AnferneeDev" target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="hover:text-foreground transition-colors">
               <Github className="size-4" />
             </a>
-            <a href="https://www.linkedin.com/in/anfernee-pichardo-0787a637a/" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">
+            <a href="https://www.linkedin.com/in/anfernee-pichardo-0787a637a/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="hover:text-foreground transition-colors">
               <Linkedin className="size-4" />
             </a>
-            <a href="mailto:anfernee.developer@gmail.com" className="hover:text-foreground transition-colors">
+            <a href="mailto:anfernee.developer@gmail.com" aria-label="Email" className="hover:text-foreground transition-colors">
               <Mail className="size-4" />
             </a>
           </div>
