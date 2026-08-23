@@ -132,17 +132,6 @@ const Projects = () => {
 
   const projects: Project[] = [
     {
-      id: "local-link",
-      title: t("items.local-link.title"),
-      description: t("items.local-link.description"),
-      imageUrl: "/projects/locallink.gif",
-      icon: Database,
-      technologies: ["Electron", "React", "Express.js", "Socket.io", "Tailwind CSS"],
-      githubUrl: "https://github.com/AnferneeDev/Local-Link",
-      demoUrl: "https://github.com/AnferneeDev/Local-Link/releases",
-      isDemoLive: false,
-    },
-    {
       id: "ai-or-not",
       title: t("items.ai-or-not.title"),
       description: t("items.ai-or-not.description"),
@@ -162,6 +151,17 @@ const Projects = () => {
       technologies: ["Docker", "AWS CloudFormation", "Cloudflare Tunnel", "n8n", "EC2"],
     },
     {
+      id: "clarity",
+      title: t("items.clarity.title"),
+      description: t("items.clarity.description"),
+      imageUrl: "/projects/clarity.gif",
+      icon: Code2,
+      technologies: ["Electron", "React", "TypeScript", "Vite", "shadcn/ui"],
+      githubUrl: "https://github.com/AnferneeDev/Clarity",
+      demoUrl: "https://github.com/AnferneeDev/Clarity/releases",
+      isDemoLive: false,
+    },
+    {
       id: "clear-feed",
       title: t("items.clear-feed.title"),
       description: t("items.clear-feed.description"),
@@ -173,14 +173,14 @@ const Projects = () => {
       isDemoLive: true,
     },
     {
-      id: "clarity",
-      title: t("items.clarity.title"),
-      description: t("items.clarity.description"),
-      imageUrl: "/projects/clarity.gif",
-      icon: Code2,
-      technologies: ["Electron", "React", "TypeScript", "Vite", "shadcn/ui"],
-      githubUrl: "https://github.com/AnferneeDev/Clarity",
-      demoUrl: "https://github.com/AnferneeDev/Clarity/releases",
+      id: "local-link",
+      title: t("items.local-link.title"),
+      description: t("items.local-link.description"),
+      imageUrl: "/projects/locallink.gif",
+      icon: Database,
+      technologies: ["Electron", "React", "Express.js", "Socket.io", "Tailwind CSS"],
+      githubUrl: "https://github.com/AnferneeDev/Local-Link",
+      demoUrl: "https://github.com/AnferneeDev/Local-Link/releases",
       isDemoLive: false,
     },
   ];
